@@ -22,3 +22,31 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Install
+
+Build the docker container
+
+```bash
+# comment out line 12 & 13 of Dockerfile
+docker-compose build web
+```
+
+Initialize a new rails app (this generates gemfile and gemfile.lock)
+
+```bash
+docker-compose run web rails new . --no-deps --database=postgresql
+```
+
+Install gems
+
+```bash
+# uncomment line 12 & 13 of Dockerfile
+docker-compose build web
+```
+
+Run
+
+```bash
+docker-compose run web
+```
