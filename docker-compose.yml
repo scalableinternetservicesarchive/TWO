@@ -2,7 +2,13 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+    - type: volume
+      source: mydata
+      target: /var/lib/postgresql/data
+      volume:
+        nocopy: true
+    # ports:
+    #   - "5432:5432"
   web:
     build: .
       # context: .
@@ -15,4 +21,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-version: '3'
+version: '3.7'
+
+volumes:
+  mydata:

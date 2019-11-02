@@ -45,8 +45,18 @@ Install gems
 docker-compose build web
 ```
 
-Run
+Varify it's working
 
 ```bash
 docker-compose run web
+```
+
+create database (may not be necessary?)
+```bash
+docker-compose run web rails db:create
+```
+
+start the service (and note that there is no app)
+```bash
+docker-compose up
 ```
