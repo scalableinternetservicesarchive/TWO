@@ -23,7 +23,28 @@ Things you may want to cover:
 
 * ...
 
-## Install
+## Install from repo (not tested)
+
+Install gems
+
+```bash
+docker-compose build web
+```
+
+create database
+```bash
+docker-compose run web rails db:create
+```
+
+start the service (and note that there is no app)
+```bash
+docker-compose up
+```
+
+next step: create scaffolding
+
+
+## Create from Dockerfile and docker-compose.yml
 
 Build the docker container
 
@@ -51,12 +72,14 @@ Varify it's working
 docker-compose run web
 ```
 
-create database (may not be necessary?)
+create database
 ```bash
 docker-compose run web rails db:create
 ```
 
-start the service (and note that there is no app)
+start the service
 ```bash
 docker-compose up
 ```
+
+next step: create scaffolding
