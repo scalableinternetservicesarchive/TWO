@@ -72,6 +72,10 @@ Varify it's working
 docker-compose run web
 ```
 
+edit config/database.yml
++ line 20:   host: db
++ line 24:   username: postgres
+
 create database
 ```bash
 docker-compose run web rails db:create
