@@ -36,6 +36,11 @@ create database
 docker-compose run web rails db:create
 ```
 
+migrate database
+```bash
+docker-compose run web rails db:migrate
+```
+
 start the service (and note that there is no app)
 ```bash
 docker-compose up
@@ -45,6 +50,10 @@ next step: create scaffolding
 
 
 ## Create from Dockerfile and docker-compose.yml
+
+Commands I used to build these files.
+
+<span style="color:darkred">**REMOVE ALL FILES EXCEPT Dockerfile AND docker-compose.yml**</spam>
 
 Build the docker container
 
@@ -89,4 +98,9 @@ docker-compose up
 create scaffolding
 ```bash
 docker-compose run web rails generate scaffold WhateverChat
+```
+
+migrate database
+```bash
+docker-compose run web rails db:migrate
 ```
