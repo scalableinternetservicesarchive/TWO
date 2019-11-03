@@ -73,17 +73,20 @@ docker-compose run web
 ```
 
 edit config/database.yml
-+ line 20:   host: db
-+ line 24:   username: postgres
++ line 20:  + host: db
++ line 24:  + username: postgres
 
 create database
 ```bash
 docker-compose run web rails db:create
 ```
 
-start the service
+start the service and verify it works
 ```bash
 docker-compose up
 ```
 
-next step: create scaffolding
+create scaffolding
+```bash
+docker-compose run web rails generate scaffold WhateverChat
+```
