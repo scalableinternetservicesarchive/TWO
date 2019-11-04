@@ -9,6 +9,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add \
 
 RUN apt-get update && apt-get install -y yarn --no-install-recommends
 
+RUN yarn add webpack webpack-dev-server --dev
+
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock /app/
