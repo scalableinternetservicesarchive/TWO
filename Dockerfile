@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -y yarn --no-install-recommends
 
 RUN yarn add webpack webpack-dev-server --dev
 
-RUN bundler install
-
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock /app/
