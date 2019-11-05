@@ -10,6 +10,8 @@ class WhateverChatsController < ApplicationController
   # GET /whatever_chats/1
   # GET /whatever_chats/1.json
   def show
+    a = params[:id]
+    @whatever_chat = WhateverChat.find(a)
   end
 
   # GET /whatever_chats/new
@@ -24,7 +26,9 @@ class WhateverChatsController < ApplicationController
   # POST /whatever_chats
   # POST /whatever_chats.json
   def create
+    params.permit!
     @whatever_chat = WhateverChat.new(whatever_chat_params)
+    #render json: {status: 'SUCCESS', message:'Loaded articles', body:whatever_chat},status: :ok
 
     respond_to do |format|
       if @whatever_chat.save

@@ -12,6 +12,7 @@
   <tbody>
     <% @whatever_chats.each do |whatever_chat| %>
       <tr>
+        <td><%= whatever_chat.title %></td>
         <td><%= link_to 'Show', whatever_chat %></td>
         <td><%= link_to 'Edit', edit_whatever_chat_path(whatever_chat) %></td>
         <td><%= link_to 'Destroy', whatever_chat, method: :delete, data: { confirm: 'Are you sure?' } %></td>

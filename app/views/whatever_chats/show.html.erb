@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<h2> Title : <%= @whatever_chat.title %> </h2> By : </h3> <%= @whatever_chat.alias %> </h3>
+
+<h4> Body : <%= @whatever_chat.body %> </h4>
+
 <%= link_to 'Edit', edit_whatever_chat_path(@whatever_chat) %> |
 <%= link_to 'Back', whatever_chats_path %>

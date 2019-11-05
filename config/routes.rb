@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/users/new', to: 'users#new'
   get '/login', to: 'sessions#new'
   get '/whatever', to: 'whatever_chats#index'
+  post '/post', to: 'whatever_chats#create'
   get '/logout', to: 'sessions#destroy'
   post '/login', to: 'sessions#create'
   

@@ -11,6 +11,32 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= form.label :to_user_id %>
+    <%= form.collection_select :to_user_id, User.all, :id, :username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :from_user_id %>
+    <%= form.text_field :from_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :alias %>
+    <%= form.text_field :alias %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
