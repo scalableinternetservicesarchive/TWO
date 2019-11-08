@@ -1,9 +1,18 @@
 class WhateverChatsController < ApplicationController
+
   before_action :set_whatever_chat, only: [:show, :edit, :update, :destroy]
 
   # GET /whatever_chats
   # GET /whatever_chats.json
   def index
+    @current_user ||= User.find_by(id: session[:user_id])
+    puts @current_user
+    if @current_user.nil?
+      puts "nill"
+    else
+      puts "not nill"
+      puts @current_user.username
+    end
     @whatever_chats = WhateverChat.all
   end
 
