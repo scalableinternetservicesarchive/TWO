@@ -11,7 +11,7 @@ class WhateverChatsController < ApplicationController
       puts "nill"
     else
       puts "not nill"
-      puts @current_user.username
+      puts @current_user.userid
     end
     @whatever_chats = WhateverChat.all
   end
