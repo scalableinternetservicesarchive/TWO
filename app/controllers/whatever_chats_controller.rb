@@ -11,9 +11,12 @@ class WhateverChatsController < ApplicationController
       puts "nill"
     else
       puts "not nill"
-      puts @current_user.userid
+      puts @current_user.username
+      
+      
     end
     @whatever_chats = WhateverChat.all
+    @comments = Comment.all
   end
 
   # GET /whatever_chats/1
@@ -74,6 +77,17 @@ class WhateverChatsController < ApplicationController
     end
   end
 
+  def post_comment
+    params.permit!
+    @comment = Comment.new(comment_params)
+  end
+
+  # Javascript needs to render this
+  def show_comment
+    puts @whatever_chat.id
+    #respond_to do |format|
+      #format.html { redirect_to "/posPt/"}
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_whatever_chat
@@ -83,5 +97,9 @@ class WhateverChatsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def whatever_chat_params
       params.fetch(:whatever_chat, {})
+    end
+
+    def comment_params
+      params.fetch(:comment, {})
     end
 end

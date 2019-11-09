@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :users
   resources :whatever_chats
   root 'home#index'
+  get '/', to: 'home#index'
   get '/users/new', to: 'users#new'
   get '/login', to: 'sessions#new'
   get '/whatever', to: 'whatever_chats#index'

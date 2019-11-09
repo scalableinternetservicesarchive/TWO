@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Whatever Chats</h1>
+<h1>Global Whatever Chats</h1>
 
 <table>
   <thead>
@@ -17,6 +17,7 @@
         <td><%= link_to 'Show', whatever_chat %></td>
         <td><%= link_to 'Edit', edit_whatever_chat_path(whatever_chat) %></td>
         <td><%= link_to 'Destroy', whatever_chat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Show Comments', whatever_chat, method: :show%></td>
       </tr>
     <% end %>
     <% end %>
