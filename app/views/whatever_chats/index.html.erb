@@ -28,4 +28,8 @@
 
 <%= link_to 'New Whatever Chat', new_whatever_chat_path %>
 <br>
+<% if @current_user.nil? %>
+<%= link_to 'Home', '/' %>
+<% else %>
 <%= link_to 'Logout', '/logout' %>
+<% end %>
