@@ -1,6 +1,6 @@
 class WhateverChatsController < ApplicationController
 
-  before_action :set_whatever_chat, only: [:show, :edit, :update, :destroy]
+  before_action :set_whatever_chat, only: [:show, :edit, :update, :destroy, :post_comment]
 
   # GET /whatever_chats
   # GET /whatever_chats.json
@@ -77,17 +77,20 @@ class WhateverChatsController < ApplicationController
     end
   end
 
+  # POST /whatever_chats/1
+  # POST /whatever_chats/1.json
   def post_comment
     params.permit!
     @comment = Comment.new(comment_params)
   end
 
-  # Javascript needs to render this
+
   def show_comment
     puts @whatever_chat.id
     #respond_to do |format|
       #format.html { redirect_to "/posPt/"}
   end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_whatever_chat
