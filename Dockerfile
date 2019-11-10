@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y yarn --no-install-recommends
 
 RUN yarn add webpack webpack-dev-server --dev
 
+RUN yarn add bootstrap jquery popper.js
+
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock /app/
