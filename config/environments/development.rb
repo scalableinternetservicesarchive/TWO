@@ -1,6 +1,13 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # //stackoverflow.com/questions/29417328/
+  # //github.com/rails/web-console
+  # enables rails web console when developing
+  # it should show up when encountering an exception
+  # if your docker environment gives a different IP to the container, add it here
+  config.web_console.permissions = '172.22.0.0/16'
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
