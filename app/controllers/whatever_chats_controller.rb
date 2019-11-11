@@ -11,9 +11,7 @@ class WhateverChatsController < ApplicationController
       puts "nill"
     else
       puts "not nill"
-      puts @current_user.username
-      
-      
+      puts @current_user.username      
     end
     @whatever_chats = WhateverChat.all
     @comments = Comment.all
@@ -24,10 +22,18 @@ class WhateverChatsController < ApplicationController
   def show
     a = params[:id]
     @whatever_chat = WhateverChat.find(a)
+    if @whatever_chat.from_user_id.nil? 
+      @loggedIn = false
+      @nameToDisplay = @whatever_chat.alias
+    else 
+      @loggedIn = false
+      @nameToDisplay = @whatever_chat.from_user_id
+    end 
   end
 
   # GET /whatever_chats/new
   def new
+    @current_user ||= User.find_by(id: session[:user_id])
     @whatever_chat = WhateverChat.new
   end
 
@@ -40,6 +46,15 @@ class WhateverChatsController < ApplicationController
   def create
     params.permit!
     @whatever_chat = WhateverChat.new(whatever_chat_params)
+    @current_user ||= User.find_by(id: session[:user_id])
+    if @current_user.nil?
+      puts "Unauth user"
+    else
+      puts "not nill"
+      @whatever_chat.from_user_id = @current_user.username  
+      puts @whatever_chat    
+    end
+    
     #render json: {status: 'SUCCESS', message:'Loaded articles', body:whatever_chat},status: :ok
 
     respond_to do |format|
