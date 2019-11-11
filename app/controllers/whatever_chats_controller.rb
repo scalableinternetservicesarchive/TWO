@@ -1,6 +1,6 @@
 class WhateverChatsController < ApplicationController
 
-  before_action :set_whatever_chat, only: [:show, :edit, :update, :destroy]
+  before_action :set_whatever_chat, only: [:show, :edit, :update, :destroy, :post_comment]
 
   # GET /whatever_chats
   # GET /whatever_chats.json
@@ -11,9 +11,7 @@ class WhateverChatsController < ApplicationController
       puts "nill"
     else
       puts "not nill"
-      puts @current_user.username
-      
-      
+      puts @current_user.username      
     end
     @whatever_chats = WhateverChat.all
     @comments = Comment.all
@@ -24,10 +22,18 @@ class WhateverChatsController < ApplicationController
   def show
     a = params[:id]
     @whatever_chat = WhateverChat.find(a)
+    if @whatever_chat.from_user_id.nil? 
+      @loggedIn = false
+      @nameToDisplay = @whatever_chat.alias
+    else 
+      @loggedIn = false
+      @nameToDisplay = @whatever_chat.from_user_id
+    end 
   end
 
   # GET /whatever_chats/new
   def new
+    @current_user ||= User.find_by(id: session[:user_id])
     @whatever_chat = WhateverChat.new
   end
 
@@ -40,6 +46,15 @@ class WhateverChatsController < ApplicationController
   def create
     params.permit!
     @whatever_chat = WhateverChat.new(whatever_chat_params)
+    @current_user ||= User.find_by(id: session[:user_id])
+    if @current_user.nil?
+      puts "Unauth user"
+    else
+      puts "not nill"
+      @whatever_chat.from_user_id = @current_user.username  
+      puts @whatever_chat    
+    end
+    
     #render json: {status: 'SUCCESS', message:'Loaded articles', body:whatever_chat},status: :ok
 
     respond_to do |format|
@@ -77,17 +92,20 @@ class WhateverChatsController < ApplicationController
     end
   end
 
+  # POST /whatever_chats/1
+  # POST /whatever_chats/1.json
   def post_comment
     params.permit!
     @comment = Comment.new(comment_params)
   end
 
-  # Javascript needs to render this
+
   def show_comment
     puts @whatever_chat.id
     #respond_to do |format|
       #format.html { redirect_to "/posPt/"}
   end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_whatever_chat

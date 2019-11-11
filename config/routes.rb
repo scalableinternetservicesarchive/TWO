@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/post', to: 'whatever_chats#create'
   get '/logout', to: 'sessions#destroy'
   post '/login', to: 'sessions#create'
+  post '/whatever_chats/:id', to: 'whatever_chats#post_comment'
   
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

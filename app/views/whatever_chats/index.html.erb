@@ -12,13 +12,18 @@
   <tbody>
     <% @whatever_chats.each do |whatever_chat| %>
       <% if whatever_chat.to_user_id == "0" %>
-      <tr>
-        <td><%= whatever_chat.title %></td>
-        <td><%= link_to 'Show', whatever_chat %></td>
-        <td><%= link_to 'Edit', edit_whatever_chat_path(whatever_chat) %></td>
-        <td><%= link_to 'Destroy', whatever_chat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= button_to 'Show Comments', whatever_chat, method: :show%></td>
-      </tr>
+
+      <div class="card border-secondary mb-3" style="max-width: 18rem;">
+        <div class="card-header">
+        <h5 class="card-title"><%= whatever_chat.title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">
+        <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
+        </span></h6>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><%= whatever_chat.body %></p>
+        </div>
+      </div>
     <% end %>
     <% end %>
   </tbody>
