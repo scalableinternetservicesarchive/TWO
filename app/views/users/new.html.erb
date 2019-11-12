@@ -1,5 +1,8 @@
-<h1>Sign Up</h1>
-
-<%= render 'form', user: @user %>
-
-<%= link_to 'Back', '/' %>
+<div class="backdrop">
+  <div class="form-signin text-center">
+    <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/9/96/WeChat_logo_Android.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+    <%= render 'form', user: @user %>
+    <%= link_to 'Back', '/', {class: "btn btn-lg btn-light btn-block"} %>
+  </div>
+</div>
