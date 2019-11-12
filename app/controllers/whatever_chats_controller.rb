@@ -112,9 +112,13 @@ class WhateverChatsController < ApplicationController
     render :to_me_err, :layout => "application" if @current_user.nil?
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id)
-    puts '--------------------------'
-    puts @whatever_chats.inspect
-    puts '--------------------------'
+  end
+
+  def from
+    user_id = params[:user_id]
+    @current_user = User.find_by(id: user_id)
+    @whatever_chats = WhateverChat.where(from_user_id: user_id)
+    render :template => 'whatever_chats/index'
   end
   
   private

@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   post '/whatever_chats/:id', to: 'comments#create'
   
   get '/to_me', to: 'whatever_chats#to_me'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get '/from/:user_id', to: 'whatever_chats#from'
 end
