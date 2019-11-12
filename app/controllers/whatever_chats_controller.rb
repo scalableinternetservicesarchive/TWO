@@ -105,6 +105,17 @@ class WhateverChatsController < ApplicationController
     #respond_to do |format|
       #format.html { redirect_to "/posPt/"}
   end
+
+  def to_me
+    user_id = session[:user_id]
+    @current_user = User.find_by(id: user_id)
+    render :to_me_err, :layout => "application" if @current_user.nil?
+
+    @whatever_chats = WhateverChat.where(to_user_id: user_id)
+    puts '--------------------------'
+    puts @whatever_chats.inspect
+    puts '--------------------------'
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.
