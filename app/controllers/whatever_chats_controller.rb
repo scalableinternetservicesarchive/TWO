@@ -109,7 +109,12 @@ class WhateverChatsController < ApplicationController
   def to_me
     user_id = session[:user_id]
     @current_user = User.find_by(id: user_id)
-    render :to_me_err, :layout => "application" if @current_user.nil?
+
+    if @current_user.nil?
+      @err_msg = 'Hey man seems like you\'re not logged in... '
+      render :err, :layout => "application"
+      return
+    end
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id)
   end
@@ -117,6 +122,13 @@ class WhateverChatsController < ApplicationController
   def from
     user_id = params[:user_id]
     @current_user = User.find_by(id: user_id)
+
+    if @current_user.nil?
+      @err_msg = 'Nice try, but no such user exists...'
+      render :err, :layout => "application"
+      return
+    end
+
     @whatever_chats = WhateverChat.where(from_user_id: user_id)
     render :template => 'whatever_chats/index'
   end
