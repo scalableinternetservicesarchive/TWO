@@ -9,32 +9,19 @@ By : </h3>
 
 <%= link_to 'Edit', edit_whatever_chat_path(@whatever_chat) %> |
 <%= link_to 'Back', whatever_chats_path %>
+</br></br></br>
 <% unless @comments.nil? %>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
+    <h5> Comments </h5>
       <% @comments.each do |comment| %>
-        <% if whatever_chat.id == comment.postid %>
-        <tr>
-          <td><%= comment.body %></td>
-          <td><%= link_to 'Show', whatever_chat %></td>
-          <td><%= link_to 'Edit', edit_whatever_chat_path(whatever_chat) %></td>
-          <td><%= link_to 'Destroy', whatever_chat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= button_to 'Show Comments', whatever_chat, method: :show%></td>
-        </tr>
+          <%= comment.body %> - <span class="badge badge-info">
+          <%= User.find(comment.userid).username %>
+          </span>
+          </br></br>
       <% end %>
-      <% end %>
-    </tbody>
-  </table>
 <% end %>
 
 <%= form_with(method: "post_comment") do %>
-  <%= label_tag(:q, "Comment:") %>
-  <%= text_field_tag(:q) %>
+  <%= label_tag(:commentBody, "Comment:") %>
+  <%= text_field_tag(:commentBody) %>
   <%= submit_tag("Post Comment") %>
 <% end %>
