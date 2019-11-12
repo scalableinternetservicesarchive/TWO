@@ -1,9 +1,3 @@
-<style>
-a.custom-card,
-a.custom-card:hover {
-  color: inherit;
-}
-</style>
 <div class="chat-backdrop flex-column" style="justify-content: flex-start">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
@@ -38,21 +32,32 @@ a.custom-card:hover {
 
     <% @whatever_chats.each do |whatever_chat| %>
       <% if whatever_chat.to_user_id == "0" %>
-      <a href="/whatever_chats/<%= whatever_chat.id%>" class="custom-card">
         <div class="card border-secondary mb-3">
           <div class="card-header">
             <h5 class="card-title"><%= whatever_chat.title %></h5>
             <div class="row">
-              <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">
+            <div class="col-xl-6">
+              <h4 class="card-subtitle sm-2 text-muted">By : <span class="badge badge-info">
               <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
-              </span></h6>
+              </span></h4>
+              </div>
+              <div class="col-xl-6">
+              <h4 class="card-subtitle sm-2 text-muted pull-right">At : <span class="badge badge-info">
+              <%= whatever_chat.updated_at.strftime("%d %b %Y") %>
+              </span></h4>
+              </div>
             </div>
           </div>
           <div class="card-body">
             <p class="card-text"><%= whatever_chat.body %></p>
           </div>
+          <div class="card-footer text-muted">
+            <a href="/whatever_chats/<%= whatever_chat.id%>" class="btn btn-primary btn-sm">View Post</a>
+            <button type="button" class="btn btn-info btn-sm">
+            Comments <span class="badge badge-light"><%= whatever_chat.comments.count() %></span>
+          </button>
+          </div>
         </div>
-        </a>
       <% end %>
     <% end %>
   </div>

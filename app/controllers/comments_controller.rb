@@ -1,8 +1,10 @@
 class CommentsController < ApplicationController
     def create
-        @post = Post.find(params[:post_id])
-         @comment = @post.comments.create(params[:comment].permit(:name, :comment))
-        redirect_to post_path(@post)
+        params.permit!
+        @current_user ||= User.find_by(id: session[:user_id])
+        @post = WhateverChat.find(params[:id])
+        @post.comments.create :userid => @current_user.id, :body => params[:commentBody]
+        redirect_to("/whatever_chats/"+params[:id])
     end
 
     def destroy

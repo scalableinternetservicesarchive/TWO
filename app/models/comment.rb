@@ -1,3 +1,3 @@
 class Comment < ApplicationRecord
-    belongs_to :whateverchat
+    belongs_to :WhateverChat, optional: true
 end

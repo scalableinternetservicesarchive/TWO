@@ -14,21 +14,21 @@ class WhateverChatsController < ApplicationController
       puts @current_user.username      
     end
     @whatever_chats = WhateverChat.all
-    @comments = Comment.all
   end
 
   # GET /whatever_chats/1
   # GET /whatever_chats/1.json
   def show
-    a = params[:id]
-    @whatever_chat = WhateverChat.find(a)
+    @id = params[:id]
+    @whatever_chat = WhateverChat.find(@id)
     if @whatever_chat.from_user_id.nil? 
       @loggedIn = false
       @nameToDisplay = @whatever_chat.alias
     else 
       @loggedIn = false
       @nameToDisplay = @whatever_chat.from_user_id
-    end 
+    end
+    @comments = @whatever_chat.comments 
   end
 
   # GET /whatever_chats/new
