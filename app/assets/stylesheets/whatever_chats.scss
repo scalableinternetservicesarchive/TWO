@@ -1,3 +1,32 @@
 // Place all the styles related to the WhateverChats controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.chat-backdrop {
+  height: 100%;
+  width: 100%;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: flex-start;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+
+// .chat-backdrop a:hover{
+  
+//   color: rgba($color: #000000, $alpha: 7.0);
+//   color: rgba($color: #ffffff, $alpha: 0.0);
+// }
+
+.chat-list {
+  width: 100%;
+  max-width: 660px;
+  padding: 15px;
+}
