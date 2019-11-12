@@ -1,0 +1,49 @@
+<h1>Personal Messages</h1>
+
+<p id="notice"><%= notice %></p>
+
+<table>
+  <thead>
+  <tr>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% if @whatever_chats.blank? %>
+
+    <h2> No one messaged you! </h2>
+
+  <% else %>
+
+    <% @whatever_chats.each do |whatever_chat| %>
+      <div class="card border-secondary mb-3" style="max-width: 18rem;">
+        <div class="card-header">
+          <h5 class="card-title"><%= whatever_chat.title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">
+        <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
+        </span></h6>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><%= whatever_chat.body %></p>
+        </div>
+      </div>
+    <% end %>
+
+  <% end %>
+
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Whatever Chat', new_whatever_chat_path %>
+<br>
+<% if @current_user.nil? %>
+  <%= link_to 'Home', '/' %>
+<% else %>
+  <%= link_to 'Logout', '/logout' %>
+<% end %>
+
+
+<%= link_to 'Back', whatever_chats_path %>
