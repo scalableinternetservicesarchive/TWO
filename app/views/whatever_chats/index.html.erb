@@ -1,3 +1,9 @@
+<style>
+a.custom-card,
+a.custom-card:hover {
+  color: inherit;
+}
+</style>
 <div class="chat-backdrop flex-column" style="justify-content: flex-start">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
@@ -32,17 +38,21 @@
 
     <% @whatever_chats.each do |whatever_chat| %>
       <% if whatever_chat.to_user_id == "0" %>
+      <a href="/whatever_chats/<%= whatever_chat.id%>" class="custom-card">
         <div class="card border-secondary mb-3">
           <div class="card-header">
             <h5 class="card-title"><%= whatever_chat.title %></h5>
-            <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">
-            <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
-            </span></h6>
+            <div class="row">
+              <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">
+              <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
+              </span></h6>
+            </div>
           </div>
           <div class="card-body">
             <p class="card-text"><%= whatever_chat.body %></p>
           </div>
         </div>
+        </a>
       <% end %>
     <% end %>
   </div>
