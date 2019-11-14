@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_084437) do
+ActiveRecord::Schema.define(version: 2019_11_14_093651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_084437) do
     t.string "to_user_id"
     t.string "from_user_id"
     t.string "alias"
+    t.string "tags"
   end
 
 end

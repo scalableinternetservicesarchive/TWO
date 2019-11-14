@@ -20,6 +20,8 @@ class WhateverChatsController < ApplicationController
   # GET /whatever_chats/1.json
   def show
     @id = params[:id]
+   
+    
     @whatever_chat = WhateverChat.find(@id)
     if @whatever_chat.from_user_id.nil? 
       @loggedIn = false
@@ -35,6 +37,7 @@ class WhateverChatsController < ApplicationController
   def new
     @current_user ||= User.find_by(id: session[:user_id])
     @whatever_chat = WhateverChat.new
+    @tags = ["love", "fashion", "happy"]
   end
 
   # GET /whatever_chats/1/edit
@@ -52,9 +55,28 @@ class WhateverChatsController < ApplicationController
     else
       puts "not nill"
       @whatever_chat.from_user_id = @current_user.username  
-      puts @whatever_chat    
+      puts @whatever_chat   
+      puts @whatever_chat.to_user_id
+      puts @whatever_chat.body
+      if @whatever_chat.to_user_id == "0"
+        @whatever_chat.tags = extract_tags(@whatever_chat.body)
+        
+      else
+        puts "not reached"
+      end
     end
+
+    # extract tags from global posts, not private messages (to id is 0)
     
+    
+    #@tag.push("love")
+    ##@tag.push("fashion")
+    #@tag.push("beautiful")
+    ##@tag.push("happy")
+    #@tag.push("cute")
+    #@tag.push("tbt")
+    #@tag.push("whateverchat")
+
     #render json: {status: 'SUCCESS', message:'Loaded articles', body:whatever_chat},status: :ok
 
     respond_to do |format|
@@ -146,5 +168,21 @@ class WhateverChatsController < ApplicationController
 
     def comment_params
       params.fetch(:comment, {})
+    end
+
+    def extract_tags(text_body)
+      puts "extracting tags"
+      tokens = text_body.gsub(/\s+/m, ' ').strip.split(" ")
+      puts tokens
+      result = ""
+      tokens.each do |tok|
+        if tok[0] == "#"
+          tok = tok[1, tok.length]
+          result += tok + ","
+        end
+        
+      end
+      return result
+      
     end
 end
