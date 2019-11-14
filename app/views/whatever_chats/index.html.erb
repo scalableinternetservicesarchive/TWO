@@ -44,8 +44,19 @@
               </span></h4>
               </div>
               <div class="col-xl-6">
-              <h4 class="card-subtitle sm-2 text-muted pull-right">At : <span class="badge badge-info">
-              <%= whatever_chat.updated_at.strftime("%d %b %Y") %>
+              <h4 class="card-subtitle sm-2 text-muted pull-right">Posted : <span class="badge badge-info">
+              <% time_since = DateTime.now.to_time.to_i - whatever_chat.updated_at.to_time.to_i%>
+              <% if time_since < 60 %>
+              <%= time_since.to_s + " seconds ago" %>
+              <% elsif (time_since / 60) < 60 %>
+              <%= (time_since / 60).to_i.to_s + " minutes ago" %>
+              <% elsif (time_since / 3600) < 24 %>
+              <%= (time_since / 3600).to_i.to_s + " hours ago" %>
+              <% elsif (time_since / 3600 / 24) < 365 %>
+              <%= (time_since / 3600 / 24).to_i.to_s + " days ago" %>
+              <% else %>
+              <%= (time_since / 3600 / 24 / 365).to_i.to_s + " years ago" %>
+              <% end %>
               </span></h4>
               </div>
             </div>

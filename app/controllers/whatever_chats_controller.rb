@@ -13,7 +13,7 @@ class WhateverChatsController < ApplicationController
       puts "not nill"
       puts @current_user.username      
     end
-    @whatever_chats = WhateverChat.all
+    @whatever_chats = WhateverChat.all.order('created_at DESC')
   end
 
   # GET /whatever_chats/1
