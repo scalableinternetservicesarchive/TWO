@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   post '/whatever_chats/:id', to: 'comments#create'
   
   get '/to_me', to: 'whatever_chats#to_me'
-  get '/from/:user_id', to: 'whatever_chats#from'
+  get '/from/:username', to: 'whatever_chats#from'
 end
