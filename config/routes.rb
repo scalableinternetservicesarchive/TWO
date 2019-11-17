@@ -13,4 +13,8 @@ Rails.application.routes.draw do
   
   get '/to_me', to: 'whatever_chats#to_me'
   get '/from/:user_id', to: 'whatever_chats#from'
+
+  resources :ads do
+    get "serve", :on => :member
+  end
 end

@@ -1,3 +1,25 @@
+<style>
+/* Pattern styles */
+.container {
+  display: table;
+  width: 100%;
+}
+
+.left-half {
+  background-color: #ff9e2c;
+  position: absolute;
+  left: 0px;
+  width: 70%;
+}
+
+.right-half {
+  background-color: #b6701e;
+  position: absolute;
+  right: 0px;
+  width: 30%;
+}
+</style>
+
 <div class="chat-backdrop flex-column" style="justify-content: flex-start">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
@@ -15,6 +37,9 @@
           <li class="nav-item">
             <%= link_to 'Private Messages', '/to_me', {class: "nav-link"} %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'Post Ad', '/ads/new', {class: "nav-link"} %>
+          </li>
         <% end %>
       </ul>
 
@@ -26,52 +51,60 @@
     </div>
   </nav>
 
-  <div class="flex-column chat-list" style="align-items: flex-start">
-    <p id="notice">
-      <%= notice %>
-    </p>
-    <%= link_to 'New Whatever Chat', new_whatever_chat_path, {class: "btn btn-lg btn-primary btn-block text-white mb-3"} %>
+  <section class="container">
+  <div class="left-half">
+    <div class="flex-column chat-list" style="align-items: flex-start">
+      <p id="notice">
+        <%= notice %>
+      </p>
+      <%= link_to 'New Whatever Chat', new_whatever_chat_path, {class: "btn btn-lg btn-primary btn-block text-white mb-3"} %>
 
-    <% @whatever_chats.each do |whatever_chat| %>
-      <% if whatever_chat.to_user_id == "0" %>
-        <div class="card border-secondary mb-3">
-          <div class="card-header">
-            <h5 class="card-title"><%= whatever_chat.title %></h5>
-            <div class="row">
-            <div class="col-xl-6">
-              <h4 class="card-subtitle sm-2 text-muted">By : <span class="badge badge-info">
-              <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
-              </span></h4>
-              </div>
+      <% @whatever_chats.each do |whatever_chat| %>
+        <% if whatever_chat.to_user_id == "0" %>
+          <div class="card border-secondary mb-3">
+            <div class="card-header">
+              <h5 class="card-title"><%= whatever_chat.title %></h5>
+              <div class="row">
               <div class="col-xl-6">
-              <h4 class="card-subtitle sm-2 text-muted pull-right">Posted : <span class="badge badge-info">
-              <% time_since = DateTime.now.to_time.to_i - whatever_chat.updated_at.to_time.to_i%>
-              <% if time_since < 60 %>
-              <%= time_since.to_s + " seconds ago" %>
-              <% elsif (time_since / 60) < 60 %>
-              <%= (time_since / 60).to_i.to_s + " minutes ago" %>
-              <% elsif (time_since / 3600) < 24 %>
-              <%= (time_since / 3600).to_i.to_s + " hours ago" %>
-              <% elsif (time_since / 3600 / 24) < 365 %>
-              <%= (time_since / 3600 / 24).to_i.to_s + " days ago" %>
-              <% else %>
-              <%= (time_since / 3600 / 24 / 365).to_i.to_s + " years ago" %>
-              <% end %>
-              </span></h4>
+                <h4 class="card-subtitle sm-2 text-muted">By : <span class="badge badge-info">
+                <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
+                </span></h4>
+                </div>
+                <div class="col-xl-6">
+                <h4 class="card-subtitle sm-2 text-muted pull-right">Posted : <span class="badge badge-info">
+                <% time_since = DateTime.now.to_time.to_i - whatever_chat.updated_at.to_time.to_i%>
+                <% if time_since < 60 %>
+                <%= time_since.to_s + " seconds ago" %>
+                <% elsif (time_since / 60) < 60 %>
+                <%= (time_since / 60).to_i.to_s + " minutes ago" %>
+                <% elsif (time_since / 3600) < 24 %>
+                <%= (time_since / 3600).to_i.to_s + " hours ago" %>
+                <% elsif (time_since / 3600 / 24) < 365 %>
+                <%= (time_since / 3600 / 24).to_i.to_s + " days ago" %>
+                <% else %>
+                <%= (time_since / 3600 / 24 / 365).to_i.to_s + " years ago" %>
+                <% end %>
+                </span></h4>
+                </div>
               </div>
             </div>
+            <div class="card-body">
+              <p class="card-text"><%= whatever_chat.body %></p>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="/whatever_chats/<%= whatever_chat.id%>" class="btn btn-primary btn-sm">View Post</a>
+              <button type="button" class="btn btn-info btn-sm">
+              Comments <span class="badge badge-light"><%= whatever_chat.comments.count() %></span>
+            </button>
+            </div>
           </div>
-          <div class="card-body">
-            <p class="card-text"><%= whatever_chat.body %></p>
-          </div>
-          <div class="card-footer text-muted">
-            <a href="/whatever_chats/<%= whatever_chat.id%>" class="btn btn-primary btn-sm">View Post</a>
-            <button type="button" class="btn btn-info btn-sm">
-            Comments <span class="badge badge-light"><%= whatever_chat.comments.count() %></span>
-          </button>
-          </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
+  <div class="right-half">
+  <h2>We hate ads too, but we love advertisers' money more. </h2>
+  </br></br>
+  </div>
+  </section>
 </div>
