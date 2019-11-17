@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_14_081956) do
+ActiveRecord::Schema.define(version: 2019_11_17_024709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,9 @@ ActiveRecord::Schema.define(version: 2019_11_14_081956) do
     t.string "to_user_id"
     t.string "from_user_id"
     t.string "alias"
+    t.string "tags"
+    t.integer "up_vote", default: 0
+    t.integer "down_vote", default: 0
   end
 
 end

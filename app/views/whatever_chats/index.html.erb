@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <style>
 /* Pattern styles */
 .container {
@@ -21,7 +22,11 @@
 </style>
 
 <div class="chat-backdrop flex-column" style="justify-content: flex-start">
+=======
+<%= javascript_pack_tag 'application' %>
+>>>>>>> origin/master
 
+<div class="chat-backdrop flex-column" style="justify-content: flex-start">
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
     <a class="navbar-brand" href="#">Whatever Chat</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +37,7 @@
       <ul class="navbar-nav mr-auto">
         <% unless @current_user.nil? %>
           <li class="nav-item">
-            <%= link_to 'Profile', '/from/'+@current_user.id.to_s, {class: "nav-link"} %>
+            <%= link_to 'Profile', '/from/'+@current_user.username.to_s, {class: "nav-link"} %>
           </li>
           <li class="nav-item">
             <%= link_to 'Private Messages', '/to_me', {class: "nav-link"} %>
@@ -59,12 +64,29 @@
       </p>
       <%= link_to 'New Whatever Chat', new_whatever_chat_path, {class: "btn btn-lg btn-primary btn-block text-white mb-3"} %>
 
+<<<<<<< HEAD
       <% @whatever_chats.each do |whatever_chat| %>
         <% if whatever_chat.to_user_id == "0" %>
           <div class="card border-secondary mb-3">
             <div class="card-header">
               <h5 class="card-title"><%= whatever_chat.title %></h5>
               <div class="row">
+=======
+    <% @whatever_chats.each do |whatever_chat| %>
+
+      <% if whatever_chat.to_user_id == "0" %>
+        <div class="card border-secondary mb-3">
+          <div class="card-header">
+            <h5 class="card-title"><%= whatever_chat.title %></h5>
+            <div class="row">
+            <div class="col-xl-6">
+              <h4 class="card-subtitle sm-2 text-muted">By : <span class="badge badge-info">
+
+                <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias :
+                    react_component("UserAvatar", { username: whatever_chat.from_user_id }, { prerender: false }) %>
+              </span></h4>
+            </div>
+>>>>>>> origin/master
               <div class="col-xl-6">
                 <h4 class="card-subtitle sm-2 text-muted">By : <span class="badge badge-info">
                 <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>

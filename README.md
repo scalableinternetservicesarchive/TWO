@@ -10,4 +10,7 @@ docker-compose run web bundle install
 
 docker-compose run web yarn install
 
+rails webpacker:install:react
+rails generate react:install
+
 docker-compose up
