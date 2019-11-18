@@ -52,6 +52,7 @@ class WhateverChatsController < ApplicationController
     @current_user ||= User.find_by(id: session[:user_id])
     if @current_user.nil?
       puts "Unauth user"
+      @whatever_chat.to_user_id = "0"
     else
       puts "not nill"
       @whatever_chat.from_user_id = @current_user.username  

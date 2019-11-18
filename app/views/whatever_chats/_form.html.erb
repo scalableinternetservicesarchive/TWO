@@ -21,10 +21,12 @@
     <%= form.text_area :body, {class: "form-control", rows: "8", required: ""} %>
   </div>
 
+  <% if !@current_user.nil? %>
   <div class="form-group">
     <%= form.label :to_user_id %>
     <%= form.collection_select :to_user_id, User.all, :id, :username, {}, {class: "form-control"} %>
   </div>
+  <% end %>
 
   <% if @current_user.nil? %>
     <div class="form-group">
