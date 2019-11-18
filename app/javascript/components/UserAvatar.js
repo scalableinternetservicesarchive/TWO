@@ -5,9 +5,10 @@ class UserAvatar extends React.Component {
   render() {
     let ava;
     try {
-      ava = require(`../images/avatars/${this.props.username}.png`);
+      ava = require('../images/avatars/'+this.props.username+'.png');
     }
     catch (e) {
+      console.log(`avatar file not found for ${this.props.username}`);
       if (e.code !== 'MODULE_NOT_FOUND') {
         throw e;
       }

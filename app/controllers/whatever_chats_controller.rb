@@ -1,6 +1,7 @@
 class WhateverChatsController < ApplicationController
 
   before_action :set_whatever_chat, only: [:show, :edit, :update, :destroy, :post_comment]
+  skip_before_action :verify_authenticity_token
 
   # GET /whatever_chats
   # GET /whatever_chats.json
@@ -153,6 +154,37 @@ class WhateverChatsController < ApplicationController
 
     @whatever_chats = WhateverChat.where(from_user_id: username)
     render :template => 'whatever_chats/index'
+  end
+
+  def vote
+    puts '--------------------------'
+    puts "xx"
+    puts '--------------------------'
+    username = params[:username]
+    whatever_chat_id = params[:whatever_chat_id]
+    operation = params[:operation]
+
+    legal_operations = %w(up down neutral)
+
+    user = User.find_by(username: username)
+    if user.nil? || username == 'Global' || !legal_operations.include?(operation)
+      puts 'illegal request to vote'
+      head :ok
+      return
+    end
+
+    v = Vote.find_by(username: username, whatever_chat_id: whatever_chat_id)
+    puts '--------------------------'
+    p v
+    puts '--------------------------'
+    if v.nil?
+      p 'xxxxxxxx'
+      p Vote.create(username:username, whatever_chat_id:whatever_chat_id, att:operation)
+    else
+      v.att = operation
+      v.save
+    end
+    head :ok
   end
   
   private

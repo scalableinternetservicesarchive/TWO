@@ -21,7 +21,8 @@
     "vue-template-compiler": "^2.6.10",
     "webpack-cli": "^3.3.10",
     "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "axios":"^0.19"
   },
   "version": "0.1.0",
   "devDependencies": {
