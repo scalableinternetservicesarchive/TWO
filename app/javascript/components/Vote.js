@@ -54,6 +54,9 @@ class Vote extends React.Component {
       this.axios_post('neutral');
     }
     else {
+      if(this.state.status === 'down') {
+        this.setState({down: this.state.down - 1});
+      }
       this.setState(() => Vote.up_state);
       this.setState( {up: this.state.up + 1} );
       this.axios_post('up');
@@ -68,6 +71,9 @@ class Vote extends React.Component {
       this.axios_post('neutral');
     }
     else {
+      if(this.state.status === 'up') {
+        this.setState({up: this.state.up - 1});
+      }
       this.setState(Vote.down_state);
       this.setState( {down: this.state.down + 1} );
       this.axios_post('down');
