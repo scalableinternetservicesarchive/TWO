@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <style>
 /* Pattern styles */
 .container {
@@ -7,25 +6,27 @@
 }
 
 .left-half {
-  background-color: #ff9e2c;
   position: absolute;
   left: 0px;
   width: 70%;
 }
 
 .right-half {
-  background-color: #b6701e;
   position: absolute;
   right: 0px;
   width: 30%;
 }
+
+div.polaroid {
+  width: 80%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 15px;
+}
+
 </style>
 
-<div class="chat-backdrop flex-column" style="justify-content: flex-start">
-=======
 <%= javascript_pack_tag 'application' %>
->>>>>>> origin/master
-
 <div class="chat-backdrop flex-column" style="justify-content: flex-start">
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
     <a class="navbar-brand" href="#">Whatever Chat</a>
@@ -58,20 +59,13 @@
 
   <section class="container">
   <div class="left-half">
-    <div class="flex-column chat-list" style="align-items: flex-start">
+    <div class="flex-column chat-list" style="align-items: flex-start; width: 50%; margin: 0 auto;">
       <p id="notice">
         <%= notice %>
       </p>
       <%= link_to 'New Whatever Chat', new_whatever_chat_path, {class: "btn btn-lg btn-primary btn-block text-white mb-3"} %>
 
-<<<<<<< HEAD
-      <% @whatever_chats.each do |whatever_chat| %>
-        <% if whatever_chat.to_user_id == "0" %>
-          <div class="card border-secondary mb-3">
-            <div class="card-header">
-              <h5 class="card-title"><%= whatever_chat.title %></h5>
-              <div class="row">
-=======
+
     <% @whatever_chats.each do |whatever_chat| %>
 
       <% if whatever_chat.to_user_id == "0" %>
@@ -86,7 +80,6 @@
                     react_component("UserAvatar", { username: whatever_chat.from_user_id }, { prerender: false }) %>
               </span></h4>
             </div>
->>>>>>> origin/master
               <div class="col-xl-6">
                 <h4 class="card-subtitle sm-2 text-muted">By : <span class="badge badge-info">
                 <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias : whatever_chat.from_user_id %>
@@ -125,8 +118,21 @@
     </div>
   </div>
   <div class="right-half">
-  <h2>We hate ads too, but we love advertisers' money more. </h2>
-  </br></br>
+  <div class="card">
+  <h5 class="card-header">We hate ads too, but we love our advertisers' money more.</h5>
+  <div class="card-body">
+  <div class="polaroid">
+  <%= image_tag url_for(:controller => "ads", :action => "serve", :id => 1), :style => "width: 100%" %>
+  </div>
+  </div>
+  </div>
+  <div class="card">
+  <div class="card-body">
+  <div class="polaroid">
+  <%= image_tag url_for(:controller => "ads", :action => "serve", :id => 2), :style => "width: 100%" %>
+  </div>
+  </div>
+  </div>
   </div>
   </section>
 </div>
