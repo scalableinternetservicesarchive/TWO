@@ -8,14 +8,14 @@ class Vote extends React.Component {
     super(props);
     let uc = 'white';
     let dc = 'white';
-    if(this.props.status === 'up') uc = 'green';
-    if(this.props.status === 'down') dc = 'red';
+    if(this.props.status === 'up') uc = '#98FB98';
+    if(this.props.status === 'down') dc = '#FFA07A';
     this.state = {
       status: props.status,
       upcolor: uc,
       downcolor: dc,
-      upnum: this.props.up,
-      downnum: this.props.down
+      up: this.props.up,
+      down: this.props.down
     };
   }
 
@@ -27,14 +27,14 @@ class Vote extends React.Component {
 
   static up_state = {
     status: 'up',
-    upcolor: 'green',
+    upcolor: '#98FB98',
     downcolor: 'white'
   };
 
   static down_state = {
     status: 'down',
     upcolor: 'white',
-    downcolor: 'red'
+    downcolor: '#FFA07A'
   };
 
   axios_post = (op) => {
@@ -51,10 +51,12 @@ class Vote extends React.Component {
   clickUp = () => {
     if(this.state.status === 'up') {
       this.setState(() => Vote.neu_state);
+      this.setState( {up: this.state.up - 1} );
       this.axios_post('neutral');
     }
     else {
       this.setState(() => Vote.up_state);
+      this.setState( {up: this.state.up + 1} );
       this.axios_post('up');
     }
     console.log(this.state);
@@ -63,10 +65,12 @@ class Vote extends React.Component {
   clickDown = () => {
     if(this.state.status === 'down') {
       this.setState(Vote.neu_state);
+      this.setState( {down: this.state.down - 1} );
       this.axios_post('neutral');
     }
     else {
       this.setState(Vote.down_state);
+      this.setState( {down: this.state.down + 1} );
       this.axios_post('down');
     }
   };
@@ -82,14 +86,14 @@ class Vote extends React.Component {
           onClick={this.clickUp}>
             <img src={require('../images/static/up.png')} alt={"upvote"}
                  height={25} width={25} />
-            {this.props.up}
+            {this.state.up}
         </div>
       <div
         style={{background: this.state.downcolor}}
         onClick={this.clickDown}>
         <img src={require('../images/static/down.png')}
                    alt={'downvote'} height={25} width={25} />
-          {this.props.down} </div>
+          {this.state.down} </div>
       </div>
     )
   }
