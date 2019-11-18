@@ -1,6 +1,9 @@
-<h1>Editing Whatever Chat</h1>
-
-<%= render 'form', whatever_chat: @whatever_chat %>
-
-<%= link_to 'Show', @whatever_chat %> |
-<%= link_to 'Back', whatever_chats_path %>
+<div class="backdrop">
+  <div class="form-new-whateverchat">
+    <h1 class="h3 mb-3 font-weight-normal">Editing Whatever Chat</h1>
+    <%= render 'form', whatever_chat: @whatever_chat %>
+    
+    <%= link_to 'Show', @whatever_chat, {class: "btn btn-secondary mt-3"} %>
+    <%= link_to 'Back', whatever_chats_path, {class: "btn btn-secondary mt-3 ml-2"} %>
+  </div>
+</div>
