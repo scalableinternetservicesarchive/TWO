@@ -81,7 +81,8 @@ class WhateverChatsController < ApplicationController
 
     respond_to do |format|
       if @whatever_chat.save
-        format.html { redirect_to @whatever_chat, notice: 'Whatever chat was successfully created.' }
+        # format.html { redirect_to @whatever_chat, notice: 'Whatever chat was successfully created.' }
+        format.html { redirect_to "/whatever", notice: 'Whatever chat was successfully created.' }
         format.json { render :show, status: :created, location: @whatever_chat }
       else
         format.html { render :new }
