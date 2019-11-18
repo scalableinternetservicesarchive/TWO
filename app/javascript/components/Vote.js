@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import UserAvatar from "./UserAvatar";
 const axios = require('axios');
 
 class Vote extends React.Component {
