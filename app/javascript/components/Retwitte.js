@@ -4,6 +4,7 @@ const axios = require('axios');
 import Modal from "react-modal";
 import ReactModal from "react-modal";
 import ReactDOM from "react-dom";
+import Vote from "./Vote";
 
 const customStyles = {
   content : {
@@ -34,6 +35,10 @@ class Retwitte extends React.Component {
 
   yesCloseModal () {
     this.setState({ showModal: false });
+    axios.post('/retwitte', {
+      username: this.props.username,
+      original_id: this.props.postid
+    });
   }
 
   noCloseModal () {
@@ -41,7 +46,8 @@ class Retwitte extends React.Component {
   }
 
   render () {
-    return (
+    if(this.props.username === "Global") return (<></>);
+    else return (
       <div>
         <button onClick={this.handleOpenModal}>Retwitte</button>
         <ReactModal
@@ -58,8 +64,9 @@ class Retwitte extends React.Component {
   }
 }
 
-const props = {};
-
-// ReactDOM.render(<ExampleApp {...props} />, document.getElementById('main'))
+Vote.propTypes = {
+  username: PropTypes.string,
+  postid: PropTypes.number,
+};
 
 export default Retwitte

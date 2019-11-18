@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   end
   get '/from/:username', to: 'whatever_chats#from'
   post '/vote', to: 'whatever_chats#vote'
+  post '/retwitte', to: 'whatever_chats#retwitte'
 end

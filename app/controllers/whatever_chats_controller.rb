@@ -21,8 +21,7 @@ class WhateverChatsController < ApplicationController
   # GET /whatever_chats/1.json
   def show
     @id = params[:id]
-   
-    
+
     @whatever_chat = WhateverChat.find(@id)
     if @whatever_chat.from_user_id.nil? 
       @loggedIn = false
@@ -159,9 +158,6 @@ class WhateverChatsController < ApplicationController
   end
 
   def vote
-    puts '--------------------------'
-    puts "xx"
-    puts '--------------------------'
     username = params[:username]
     whatever_chat_id = params[:whatever_chat_id]
     operation = params[:operation]
@@ -176,17 +172,36 @@ class WhateverChatsController < ApplicationController
     end
 
     v = Vote.find_by(username: username, whatever_chat_id: whatever_chat_id)
-    puts '--------------------------'
-    p v
-    puts '--------------------------'
     if v.nil?
-      p 'xxxxxxxx'
       p Vote.create(username:username, whatever_chat_id:whatever_chat_id, att:operation)
     else
       v.att = operation
       v.save
     end
     head :ok
+  end
+
+  def retwitte
+    username = params[:username]
+    original_id = params[:original_id]
+
+    post = WhateverChat.find_by(id: original_id)
+    user = User.find_by(username: username)
+    if post.nil? || user.nil?
+      head status :ok
+      return
+    end
+
+    WhateverChat.create(
+      title: post.title,
+      body: post.body,
+      to_user_id: post.to_user_id,
+      from_user_id: username,
+      alias: post.alias,
+      tags: post.tags,
+      original_id: original_id
+    )
+    head status :ok
   end
   
   private

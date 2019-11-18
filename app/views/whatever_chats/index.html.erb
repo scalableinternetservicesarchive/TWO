@@ -107,7 +107,15 @@ div.polaroid {
             <p class="card-text"><%= whatever_chat.body %></p>
           </div>
           <div class="card-footer text-muted">
-            <%= react_component("Retwitte") %>
+            <%= react_component("Retwitte",
+                                { username: case @current_user
+                                            when nil
+                                              'Global'
+                                            else
+                                              @current_user.username
+                                            end,
+                                  postid: whatever_chat.id
+                                }) %>
             <%= react_component("Vote",
                                 { username: @current_user.nil? ? 'Global' : @current_user.username,
                                   postid: whatever_chat.id,
