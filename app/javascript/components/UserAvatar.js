@@ -25,7 +25,7 @@ class UserAvatar extends React.Component {
 }
 
 UserAvatar.propTypes = {
-    username: PropTypes.string
+  username: PropTypes.string
 };
 
 export default UserAvatar

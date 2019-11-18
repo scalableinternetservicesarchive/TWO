@@ -34,3 +34,11 @@ yarn-debug.log*
 .generators
 .rakeTasks
 
+# the eb generated default
+# # Elastic Beanstalk Files
+# .elasticbeanstalk/*
+# !.elasticbeanstalk/*.cfg.yml
+# !.elasticbeanstalk/*.global.yml
+
+# just ignore everything to keep ec2.cs291.com consistent
+/.elasticbeanstalk
