@@ -11,29 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, {class: "form-control", required: "", autofocus: ""} %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :body %>
-    <%= form.text_area :body %>
+    <%= form.text_area :body, {class: "form-control", rows: "8", required: ""} %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :to_user_id %>
-    <%= form.collection_select :to_user_id, User.all, :id, :username %>
+    <%= form.collection_select :to_user_id, User.all, :id, :username, {}, {class: "form-control"} %>
   </div>
-  
+
   <% if @current_user.nil? %>
-  <div class="field">
-    <%= form.label :alias %>
-    <%= form.text_field :alias %>
+    <div class="form-group">
+      <%= form.label :alias %>
+      <%= form.text_field :alias, {class: "form-control", required: ""} %>
   </div>
   <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit "Create User", {class: "btn btn-primary"}  %>
 <% end %>
