@@ -1,0 +1,17 @@
+<%= form_for(@ad, :html => {:multipart => true}) do |f| %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :tags %>
+      <%= f.text_field :tags %>
+    </div>
+    <div class="field">
+      <%= f.label :data %>
+      <%= f.file_field :data %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Upload" %>
+    </div>
+  <% end %>

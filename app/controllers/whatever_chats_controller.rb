@@ -53,6 +53,7 @@ class WhateverChatsController < ApplicationController
     @current_user ||= User.find_by(id: session[:user_id])
     if @current_user.nil?
       puts "Unauth user"
+      @whatever_chat.to_user_id = "0"
     else
       puts "not nill"
       @whatever_chat.from_user_id = @current_user.username  
@@ -82,7 +83,8 @@ class WhateverChatsController < ApplicationController
 
     respond_to do |format|
       if @whatever_chat.save
-        format.html { redirect_to @whatever_chat, notice: 'Whatever chat was successfully created.' }
+        # format.html { redirect_to @whatever_chat, notice: 'Whatever chat was successfully created.' }
+        format.html { redirect_to "/whatever", notice: 'Whatever chat was successfully created.' }
         format.json { render :show, status: :created, location: @whatever_chat }
       else
         format.html { render :new }

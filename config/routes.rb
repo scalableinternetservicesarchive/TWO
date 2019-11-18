@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   post '/whatever_chats/:id', to: 'comments#create'
   
   get '/to_me', to: 'whatever_chats#to_me'
+  resources :ads do
+    get "serve", :on => :member
+  end
   get '/from/:username', to: 'whatever_chats#from'
   post '/vote', to: 'whatever_chats#vote'
 end

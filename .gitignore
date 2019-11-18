@@ -13,9 +13,9 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore uploaded files in development.
-/storage/*
-!/storage/.keep
+# # Ignore uploaded files in development.
+# /storage/*
+# !/storage/.keep
 
 /public/assets
 .byebug_history
@@ -34,7 +34,11 @@ yarn-debug.log*
 .generators
 .rakeTasks
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+# the eb generated default
+# # Elastic Beanstalk Files
+# .elasticbeanstalk/*
+# !.elasticbeanstalk/*.cfg.yml
+# !.elasticbeanstalk/*.global.yml
+
+# just ignore everything to keep ec2.cs291.com consistent
+/.elasticbeanstalk
