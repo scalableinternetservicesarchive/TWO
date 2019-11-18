@@ -78,6 +78,11 @@ div.polaroid {
 
                 <%= whatever_chat.from_user_id.nil? ? whatever_chat.alias :
                     react_component("UserAvatar", { username: whatever_chat.from_user_id }, { prerender: false }) %>
+
+                <% if whatever_chat.original_id != 0 %>
+                  Reposted, see <%= link_to 'Original', '/whatever_chats/' + whatever_chat.original_id.to_s %>
+                <% end %>
+
               </span></h4>
             </div>
                 <div class="col-xl-6">
