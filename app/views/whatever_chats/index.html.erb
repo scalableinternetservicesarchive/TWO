@@ -1,22 +1,5 @@
 <style>
 /* Pattern styles */
-.container {
-  display: table;
-  width: 100%;
-}
-
-.left-half {
-  position: absolute;
-  left: 0px;
-  width: 70%;
-}
-
-.right-half {
-  position: absolute;
-  right: 0px;
-  width: 30%;
-}
-
 div.polaroid {
   width: 80%;
   background-color: white;
@@ -57,8 +40,8 @@ div.polaroid {
     </div>
   </nav>
 
-  <section class="container">
-  <div class="left-half">
+  <section class="d-flex w-100">
+  <div class="left-half flex-grow-1">
     <div class="flex-column chat-list" style="align-items: flex-start; width: 50%; margin: 0 auto;">
       <p id="notice">
         <%= notice %>
@@ -139,7 +122,7 @@ div.polaroid {
       <% end %>
     </div>
   </div>
-  <div class="right-half">
+  <div class="right-half" style="max-width: 30%">
   <div class="card">
   <h5 class="card-header">We hate ads too, but we love our advertisers' money more.</h5>
   <div class="card-body">
