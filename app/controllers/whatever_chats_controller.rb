@@ -7,14 +7,52 @@ class WhateverChatsController < ApplicationController
   # GET /whatever_chats.json
   def index
     @current_user ||= User.find_by(id: session[:user_id])
-    puts @current_user
+
+    #TODO :Bring only the id and the tags column from db as you are again making an api call to get the image
+    ads = Ad.all()
+    adCount = ads.length
+    @ad1_id = 1
+    @ad2_id = 2
     if @current_user.nil?
-      puts "nill"
+      @ad1_id = 1 + Random.rand(adCount)
+      @ad2_id = 1 + Random.rand(adCount)
+      while @ad1_id == @ad2_id
+        @ad2_id = 1 + Random.rand(adCount)
+      end
     else
-      puts "not nill"
-      puts @current_user.username      
+      userTags =  @current_user.tags.split(",")
+      puts userTags
+      puts "Ad tags are : "
+      relevantAds = []      
+      ads.each do |ad|
+        userTags.each { |item|
+          if ad.tags.downcase.include? item.downcase
+            puts "found an ad match"
+            if !relevantAds.include? ad.id          
+              relevantAds << ad.id
+            end
+          end
+        }
+      end
+      if relevantAds.length == 0
+        @ad1_id = 1 + Random.rand(adCount)
+        @ad2_id = 1 + Random.rand(adCount)
+        while @ad1_id == @ad2_id
+          @ad2_id = 1 + Random.rand(adCount)
+        end
+      else
+        @ad1_id = relevantAds.sample
+        relevantAds.delete(@ad1_id)
+        if relevantAds.length == 0
+          @ad2_id = 1 + Random.rand(adCount)
+          while @ad1_id == @ad2_id
+            @ad2_id = 1 + Random.rand(adCount)
+          end   
+        end
+      end  
     end
     @whatever_chats = WhateverChat.all.order('created_at DESC')
+    
   end
 
   # GET /whatever_chats/1
@@ -37,7 +75,6 @@ class WhateverChatsController < ApplicationController
   def new
     @current_user ||= User.find_by(id: session[:user_id])
     @whatever_chat = WhateverChat.new
-    @tags = ["love", "fashion", "happy"]
   end
 
   # GET /whatever_chats/1/edit
@@ -60,23 +97,15 @@ class WhateverChatsController < ApplicationController
       puts @whatever_chat.to_user_id
       puts @whatever_chat.body
       if @whatever_chat.to_user_id == "0"
-        @whatever_chat.tags = extract_tags(@whatever_chat.body)
-        
+        @tags = extract_tags(@whatever_chat.body)
+        @whatever_chat.tags = @tags
+        #TODO: Adds an extra comma at the end, fix it
+        @current_user.tags = @tags.join(",") + "," + @current_user.tags
+        @current_user.save
       else
         puts "not reached"
       end
     end
-
-    # extract tags from global posts, not private messages (to id is 0)
-    
-    
-    #@tag.push("love")
-    ##@tag.push("fashion")
-    #@tag.push("beautiful")
-    ##@tag.push("happy")
-    #@tag.push("cute")
-    #@tag.push("tbt")
-    #@tag.push("whateverchat")
 
     #render json: {status: 'SUCCESS', message:'Loaded articles', body:whatever_chat},status: :ok
 
@@ -221,17 +250,6 @@ class WhateverChatsController < ApplicationController
 
     def extract_tags(text_body)
       puts "extracting tags"
-      tokens = text_body.gsub(/\s+/m, ' ').strip.split(" ")
-      puts tokens
-      result = ""
-      tokens.each do |tok|
-        if tok[0] == "#"
-          tok = tok[1, tok.length]
-          result += tok + ","
-        end
-        
-      end
-      return result
-      
+      return text_body.scan(/#(\w+)/)
     end
 end
