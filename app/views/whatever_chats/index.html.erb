@@ -144,14 +144,14 @@ div.polaroid {
   <h5 class="card-header">We hate ads too, but we love our advertisers' money more.</h5>
   <div class="card-body">
   <div class="polaroid">
-  <%= image_tag url_for(:controller => "ads", :action => "serve", :id => 1), :style => "width: 100%" %>
+  <img style="width: 100%" src="/ads/<%= @ad1_id%>/serve">
   </div>
   </div>
   </div>
   <div class="card">
   <div class="card-body">
   <div class="polaroid">
-  <%= image_tag url_for(:controller => "ads", :action => "serve", :id => 2), :style => "width: 100%" %>
+  <img style="width: 100%" src="/ads/<%= @ad2_id%>/serve">
   </div>
   </div>
   </div>

@@ -15,6 +15,8 @@ class WhateverChatsController < ApplicationController
       puts @current_user.username      
     end
     @whatever_chats = WhateverChat.all.order('created_at DESC')
+    @ad1_id = 1
+    @ad2_id = 2
   end
 
   # GET /whatever_chats/1
