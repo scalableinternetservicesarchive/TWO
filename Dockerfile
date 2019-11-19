@@ -13,6 +13,8 @@ RUN yarn add webpack webpack-dev-server --dev
 
 RUN yarn add bootstrap jquery popper.js
 
+RUN yarn install
+
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock /app/
