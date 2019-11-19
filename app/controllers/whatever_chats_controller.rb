@@ -39,7 +39,6 @@ class WhateverChatsController < ApplicationController
   def new
     @current_user ||= User.find_by(id: session[:user_id])
     @whatever_chat = WhateverChat.new
-    @tags = ["love", "fashion", "happy"]
   end
 
   # GET /whatever_chats/1/edit
@@ -62,23 +61,14 @@ class WhateverChatsController < ApplicationController
       puts @whatever_chat.to_user_id
       puts @whatever_chat.body
       if @whatever_chat.to_user_id == "0"
-        @whatever_chat.tags = extract_tags(@whatever_chat.body)
-        
+        @tags = extract_tags(@whatever_chat.body)
+        @whatever_chat.tags = @tags
+        @current_user.tags = @tags
+        @current_user.save
       else
         puts "not reached"
       end
     end
-
-    # extract tags from global posts, not private messages (to id is 0)
-    
-    
-    #@tag.push("love")
-    ##@tag.push("fashion")
-    #@tag.push("beautiful")
-    ##@tag.push("happy")
-    #@tag.push("cute")
-    #@tag.push("tbt")
-    #@tag.push("whateverchat")
 
     #render json: {status: 'SUCCESS', message:'Loaded articles', body:whatever_chat},status: :ok
 
@@ -223,17 +213,6 @@ class WhateverChatsController < ApplicationController
 
     def extract_tags(text_body)
       puts "extracting tags"
-      tokens = text_body.gsub(/\s+/m, ' ').strip.split(" ")
-      puts tokens
-      result = ""
-      tokens.each do |tok|
-        if tok[0] == "#"
-          tok = tok[1, tok.length]
-          result += tok + ","
-        end
-        
-      end
-      return result
-      
+      return text_body.scan(/#(\w+)/)
     end
 end
