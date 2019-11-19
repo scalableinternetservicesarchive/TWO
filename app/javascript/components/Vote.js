@@ -83,6 +83,10 @@ class Vote extends React.Component {
   render() {
     const type = this.props.up ? 'up' : 'down';
     let icon = require('../images/static/'+ type + '.png');
+    if(this.props.username === "Global") {
+      this.clickUp = () => {};
+      this.clickDown = () => {};
+    }
 
     return (
       <div>
