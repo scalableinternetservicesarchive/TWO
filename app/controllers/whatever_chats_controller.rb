@@ -104,7 +104,7 @@ class WhateverChatsController < ApplicationController
         @tags = extract_tags(@whatever_chat.body)
         @whatever_chat.tags = @tags
         #TODO: Adds an extra comma at the end, fix it
-        @current_user.tags = @tags.join(",") + "," + @current_user.tags
+        @current_user.tags = @tags.join(",") + "," + (@current_user.tags.nil? ? "" : @current_user.tags)
         @current_user.save
       else
         puts "not reached"
