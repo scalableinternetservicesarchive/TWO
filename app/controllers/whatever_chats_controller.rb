@@ -188,7 +188,7 @@ class WhateverChatsController < ApplicationController
     post = WhateverChat.find_by(id: original_id)
     user = User.find_by(username: username)
     if post.nil? || user.nil?
-      head status :ok
+      head :ok
       return
     end
 
@@ -201,7 +201,7 @@ class WhateverChatsController < ApplicationController
       tags: post.tags,
       original_id: original_id
     )
-    head status :ok
+    head :ok
   end
   
   private
