@@ -1,27 +1,43 @@
-<p id="notice"><%= notice %></p>
+<div class="grey-backdrop">
+<div class="post-backdrop flex-column align-items-start">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end" style="width: 100%">
+    <%= link_to 'Close', whatever_chats_path, {class: "btn btn-outline-secondary my-2 my-sm-0"} %>
+  </nav>
+  
+  <div class="show-whateverchat">
 
-<h2> Title : <%= @whatever_chat.title %> </h2>
-By : </h3>
-<%= @nameToDisplay %>
-</h3>
+  <p id="notice"><%= notice %></p>
+  
+  <h6 class="mb-3 font-weight-normal text-secondary">Posted by: <%= @nameToDisplay %></h6>
+  <h3 class="h3 mb-3 font-weight-normal"><%= @whatever_chat.title %></h3>
 
-<h4> Body : <%= @whatever_chat.body %> </h4>
+    <p><%= @whatever_chat.body %></p>
+    
+    <%= link_to 'Edit post', edit_whatever_chat_path(@whatever_chat), {class: "text-secondary small"} %>
 
-<%= link_to 'Edit', edit_whatever_chat_path(@whatever_chat) %> |
-<%= link_to 'Back', whatever_chats_path %>
-</br></br></br>
-<% unless @comments.nil? %>
-    <h5> Comments </h5>
-      <% @comments.each do |comment| %>
-          <%= comment.body %> - <span class="badge badge-info">
-          <%= User.find(comment.userid).username %>
-          </span>
-          </br></br>
-      <% end %>
-<% end %>
+    <hr/>
 
-<%= form_with(method: "post_comment") do %>
-  <%= label_tag(:commentBody, "Comment:") %>
-  <%= text_field_tag(:commentBody) %>
-  <%= submit_tag("Post Comment") %>
-<% end %>
+    <% unless @comments.nil? %>
+        <%= form_with(method: "post_comment") do |form| %>
+          <%= form.text_area :commentBody, {class: "form-control mb-3", rows: "3", required: "", placeholder: "What are your thoughts?"} %>
+          <div class="d-flex justify-content-end">
+          <%= form.submit "Post Comment", {class: "btn btn-primary"} %>
+          </div>
+        <% end %>
+
+        <hr/>
+        
+        <h6 class="mb-3"> <%= @whatever_chat.comments.count %> Comments </h6>
+        <% @comments.each do |comment| %>
+          <div class="mb-2">
+            <span class="badge badge-info">
+              <%= User.find(comment.userid).username %>
+            </span> :
+            <%= comment.body %>
+          </div>
+        <% end %>
+    <% end %>
+
+  </div>
+</div>
+</div>
