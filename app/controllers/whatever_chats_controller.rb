@@ -7,16 +7,52 @@ class WhateverChatsController < ApplicationController
   # GET /whatever_chats.json
   def index
     @current_user ||= User.find_by(id: session[:user_id])
-    puts @current_user
-    if @current_user.nil?
-      puts "nill"
-    else
-      puts "not nill"
-      puts @current_user.username      
-    end
-    @whatever_chats = WhateverChat.all.order('created_at DESC')
+
+    #TODO :Bring only the id and the tags column from db as you are again making an api call to get the image
+    ads = Ad.all()
+    adCount = ads.length
     @ad1_id = 1
     @ad2_id = 2
+    if @current_user.nil?
+      @ad1_id = 1 + Random.rand(adCount)
+      @ad2_id = 1 + Random.rand(adCount)
+      while @ad1_id == @ad2_id
+        @ad2_id = 1 + Random.rand(adCount)
+      end
+    else
+      userTags =  @current_user.tags.split(",")
+      puts userTags
+      puts "Ad tags are : "
+      relevantAds = []      
+      ads.each do |ad|
+        userTags.each { |item|
+          if ad.tags.downcase.include? item.downcase
+            puts "found an ad match"
+            if !relevantAds.include? ad.id          
+              relevantAds << ad.id
+            end
+          end
+        }
+      end
+      if relevantAds.length == 0
+        @ad1_id = 1 + Random.rand(adCount)
+        @ad2_id = 1 + Random.rand(adCount)
+        while @ad1_id == @ad2_id
+          @ad2_id = 1 + Random.rand(adCount)
+        end
+      else
+        @ad1_id = relevantAds.sample
+        relevantAds.delete(@ad1_id)
+        if relevantAds.length == 0
+          @ad2_id = 1 + Random.rand(adCount)
+          while @ad1_id == @ad2_id
+            @ad2_id = 1 + Random.rand(adCount)
+          end   
+        end
+      end  
+    end
+    @whatever_chats = WhateverChat.all.order('created_at DESC')
+    
   end
 
   # GET /whatever_chats/1
@@ -63,7 +99,8 @@ class WhateverChatsController < ApplicationController
       if @whatever_chat.to_user_id == "0"
         @tags = extract_tags(@whatever_chat.body)
         @whatever_chat.tags = @tags
-        @current_user.tags = @tags
+        #TODO: Adds an extra comma at the end, fix it
+        @current_user.tags = @tags.join(",") + "," + @current_user.tags
         @current_user.save
       else
         puts "not reached"
