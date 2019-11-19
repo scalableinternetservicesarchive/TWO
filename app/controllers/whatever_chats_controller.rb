@@ -145,15 +145,15 @@ class WhateverChatsController < ApplicationController
 
   def from
     username = params[:username]
-    @current_user = User.find_by(username: username)
+    user = User.find_by(username: username)
 
-    if @current_user.nil?
+    if user.nil?
       @err_msg = 'Nice try, but no such user exists...'
       render :err, :layout => "application"
       return
     end
 
-    @whatever_chats = WhateverChat.where(from_user_id: username)
+    @whatever_chats = WhateverChat.where(from_user_id: username).order('created_at DESC')
     render :template => 'whatever_chats/index'
   end
 
