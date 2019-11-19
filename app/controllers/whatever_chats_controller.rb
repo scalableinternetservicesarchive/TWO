@@ -20,7 +20,11 @@ class WhateverChatsController < ApplicationController
         @ad2_id = 1 + Random.rand(adCount)
       end
     else
-      userTags =  @current_user.tags.split(",")
+      if !@current_user.tags.nil?
+        userTags =  @current_user.tags.split(",")
+      else
+        userTags = [""]
+      end
       puts userTags
       puts "Ad tags are : "
       relevantAds = []      
