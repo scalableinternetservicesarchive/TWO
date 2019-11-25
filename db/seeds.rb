@@ -7,7 +7,29 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if !User.where(:id => 0).present?
-    User.create!(id: 0,username: 'Global', password: 'Global')
+    User.create!(id: 0, username: 'Global', password: 'Global')
+    User.create!(id: 1, username: 'Albert', password: 'albert')
+    User.create!(id: 2, username: 'Byron', password: 'byron')
+    User.create!(id: 3, username: 'Cindy', password: 'cindy')
+    User.create!(id: 4, username: 'Dylan', password: 'dylan')
+    User.create!(id: 5, username: 'Ethan', password: 'ethan')
+    User.create!(id: 6, username: 'Frank', password: 'frank')
+    User.create!(id: 7, username: 'Gibson', password: 'gibson')
+    User.create!(id: 8, username: 'Haley', password: 'haley')
+    User.create!(id: 9, username: 'Issac', password: 'issac')
+    User.create!(id: 10, username: 'Jill', password: 'jill')
+    User.create!(id: 11, username: 'Krane', password: 'krane')
+    User.create!(id: 12, username: 'Liam', password: 'liam')
+    User.create!(id: 13, username: 'Morty', password: 'morty')
+    User.create!(id: 14, username: 'Nilson', password: 'nilson')
+    User.create!(id: 15, username: 'OMG', password: 'omg')
+    User.create!(id: 16, username: 'Pearson', password: 'pearson')
+    User.create!(id: 17, username: 'Quintin', password: 'quintin')
+    User.create!(id: 18, username: 'Rick', password: 'rick')
+    User.create!(id: 19, username: 'Sterling', password: 'sterling')
+    User.create!(id: 20, username: 'Terry', password: 'terry')
+
+    WhateverChat.create!(id: 0, title: 'Meetup at San Clemente', body: 'Hey guys, we are meeting at San Clemente Center 5pm today for the future of the universe. Snacks and soft drinks available!', to_user_id: '0', from_user_id: 'Liam', alias: nil, tags: '', up_vote: 0, down_vote: 0, original_id: 0)
 end
 
 if !Ad.where(:id => 1).present?
