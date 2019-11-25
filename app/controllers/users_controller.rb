@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_forgery_protection
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
