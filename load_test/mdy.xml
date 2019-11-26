@@ -52,7 +52,6 @@
     <session name="reg" probability="0" type="ts_http">
        <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
           <var name="username"/>
-          <var name="password"/>
        </setdynvars>
 
        <transaction name="registration">
@@ -67,8 +66,8 @@
             <!-- Using json here -->
             <http url="/users" method="POST" version="1.1" content_type="application/json"
                contents="{&quot;username&quot;: &quot;%%_username%%&quot;, 
-                          &quot;password&quot;: &quot;%%_password%%&quot;, 
-                          &quot;password_confirmation&quot;: &quot;%%_password%%&quot; }" />
+                          &quot;password&quot;: &quot;password&quot;, 
+                          &quot;password_confirmation&quot;: &quot;password&quot; }" />
          </request>
        </transaction>
     </session>
@@ -78,7 +77,6 @@
     <session name="normal-login-and-everything" probability="100" type="ts_http">
        <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
           <var name="loginname"/>
-          <var name="loginpassword"/>
        </setdynvars>
        <setdynvars sourcetype="random_string" length="20">
           <var name="title"/>
@@ -91,7 +89,7 @@
          <request subst="true">
             <http url="/login" method="POST" version="1.1" content_type="application/json"
                contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
-                          &quot;password&quot;: &quot;%%_loginpassword%%&quot; }" />
+                          &quot;password&quot;: &quot;password&quot; }" />
          </request>
        </transaction>
 
