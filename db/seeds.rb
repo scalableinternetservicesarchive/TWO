@@ -7,7 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if !User.where(:id => 0).present?
-    User.create!(username: 'Global', password: 'Global')
+    puts '-------------------------------------'
+    puts 'No global'
+    puts '-------------------------------------'
+    User.create!(id: 0, username: 'Global', password: 'Global')
 end
 
 if !Ad.where(:id => 1).present?
