@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="15000"/>
+  </clients>
+
+  <servers>
+    <!--
+    <server host="twdevs2.aie2pa9xpx.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+    -->
+    <server host="localhost" port="3000" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="5" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="2" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="10" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="15" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="20" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="25" unit="second"/>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="file_server" id="usersFile" value="users.csv" />
+    <option name="file_server" id="new_usersFile" value="new_users.csv" />
+    <option name="idle_timeout" value="60000"/>
+    <option name="global_ack_timeout" value="60000"/>
+  </options>
+
+  <sessions>
+
+    <!-- Registration -->
+    <session name="reg" probability="0" type="ts_http">
+       <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
+          <var name="username"/>
+       </setdynvars>
+
+       <transaction name="registration">
+
+         <request>
+            <http url="/users/new" method="GET" version="1.1" />
+         </request>
+
+         <thinktime value="5" random="true"/>
+
+         <request subst="true">
+            <!-- Using json here -->
+            <http url="/users" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_username%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot;, 
+                          &quot;password_confirmation&quot;: &quot;password&quot; }" />
+         </request>
+       </transaction>
+    </session>
+
+
+    <!-- Login and Fool Around -->
+    <session name="normal-login-and-everything" probability="100" type="ts_http">
+       <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
+          <var name="loginname"/>
+       </setdynvars>
+       <setdynvars sourcetype="random_string" length="20">
+          <var name="title"/>
+       </setdynvars>
+       <setdynvars sourcetype="random_string" length="100">
+          <var name="body"/>
+       </setdynvars>
+
+       <transaction name="login">
+         <request subst="true">
+            <http url="/login" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot; }" />
+         </request>
+       </transaction>
+
+       <thinktime value="1" random="true"/>
+
+       <request>
+         <http url="/whatever_chats/new" method="GET" version="1.1" />
+       </request>
+
+       <!-- <thinktime value="10" random="true"/>
+
+       <transaction name="newpost">
+         <request subst="true">
+            <http url="/post" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                          &quot;body&quot;: &quot;%%_body%%&quot;, 
+                          &quot;to_user_id&quot;: &quot;0&quot;, 
+                          &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;alias&quot;: &quot;&quot;, 
+                          &quot;tags&quot;: &quot;&quot;, 
+                          &quot;original_id&quot;: &quot;0&quot; }" />
+         </request>
+       </transaction> -->
+
+       <thinktime value="2" random="true"/>
+
+       <transaction name="checkindexpage">
+         <request subst="true">
+            <http url="/whatever" method="GET" version="1.1" />
+         </request>
+       </transaction>
+
+       <thinktime value="2" random="true"/>
+
+       <transaction name="viewchat">
+          <for from="1" to="5" incr="1" var="counter">
+             <thinktime value="5" random="true"/>
+             <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="rndpostid"/>
+             </setdynvars>
+             <request subst="true">  
+                <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
+             </request>
+          </for>
+       </transaction>
+
+       <transaction name="upvotes">
+          <for from="1" to="5" incr="1" var="counter">
+             <thinktime value="5" random="true"/>
+             <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="rndpostid"/>
+             </setdynvars>
+             <request subst="true"> 
+               <http url="/vote" method="POST" version="1.1" content_type="application/json"
+                  contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                             &quot;whatever_chat_id&quot;: &quot;%%_rndpostid%%&quot;, 
+                             &quot;operation&quot;: &quot;up&quot; }" />
+             </request>
+          </for>
+       </transaction>
+
+       <transaction name="downvotes">
+          <for from="1" to="5" incr="1" var="counter">
+             <thinktime value="5" random="true"/>
+             <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="rndpostid"/>
+             </setdynvars>
+             <request subst="true"> 
+               <http url="/vote" method="POST" version="1.1" content_type="application/json"
+                  contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                             &quot;whatever_chat_id&quot;: &quot;%%_rndpostid%%&quot;, 
+                             &quot;operation&quot;: &quot;down&quot; }" />
+             </request>
+          </for>
+       </transaction>
+
+
+
+
+    </session>
+
+
+  </sessions>
+</tsung>
