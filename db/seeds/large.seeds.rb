@@ -1,6 +1,6 @@
 require 'pp'
 
-names = File.readlines('large.csv').map{ |line| line.chop }
+names = File.readlines(Rails.root.join('db','seeds','large.csv')).map{ |line| line.chop }
 
 names.each { |name| User.create!(username: name, password: 'password') }
 10000.times { WhateverChat.create!(title: 'Meetup at San' + names.sample, 
