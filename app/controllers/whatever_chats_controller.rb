@@ -56,7 +56,8 @@ class WhateverChatsController < ApplicationController
       end  
     end
     # page number starts from 1, not 0
-    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).order('created_at DESC')
+    #@whatever_chats = WhateverChat.eager_load(:comments, :votes).all()
+    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
     @whatever_chat = WhateverChat.new
     
   end
