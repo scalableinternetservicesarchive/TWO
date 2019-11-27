@@ -32,6 +32,8 @@
       </div>
     <% end %>
 
+    <%= will_paginate @whatever_chats %>
+
   <% end %>
 
   </tbody>
@@ -46,6 +48,7 @@
 <% else %>
   <%= link_to 'Logout', '/logout' %>
 <% end %>
+
 
 
 <%= link_to 'Back', whatever_chats_path %>

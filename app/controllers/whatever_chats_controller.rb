@@ -55,7 +55,8 @@ class WhateverChatsController < ApplicationController
         end
       end  
     end
-    @whatever_chats = WhateverChat.all.order('created_at DESC')
+    # page number starts from 1, not 0
+    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).order('created_at DESC')
     
   end
 
@@ -173,7 +174,7 @@ class WhateverChatsController < ApplicationController
       return
     end
 
-    @whatever_chats = WhateverChat.where(to_user_id: user_id)
+    @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
   end
 
   def from
@@ -186,7 +187,7 @@ class WhateverChatsController < ApplicationController
       return
     end
 
-    @whatever_chats = WhateverChat.where(from_user_id: username).order('created_at DESC')
+    @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).order('created_at DESC')
     render :template => 'whatever_chats/index'
   end
 
