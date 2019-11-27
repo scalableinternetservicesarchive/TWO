@@ -175,11 +175,13 @@ class WhateverChatsController < ApplicationController
     end
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
+    render 'index'
   end
 
   def from
     username = params[:username]
     user = User.find_by(username: username)
+    @current_user = user
 
     if user.nil?
       @err_msg = 'Nice try, but no such user exists...'
