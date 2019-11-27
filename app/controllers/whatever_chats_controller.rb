@@ -57,6 +57,7 @@ class WhateverChatsController < ApplicationController
     end
     # page number starts from 1, not 0
     @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).order('created_at DESC')
+    @whatever_chat = WhateverChat.new
     
   end
 

@@ -9,6 +9,24 @@ div.polaroid {
 
 </style>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document"> <!-- form-new-whateverchat -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Whatever Chat</h5>
+          <!-- h1 class="h3 mb-3 font-weight-normal">New Whatever Chat</h1 -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <%= render 'form', whatever_chat: @whatever_chat %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%= javascript_pack_tag 'application' %>
 <div class="chat-backdrop flex-column" style="justify-content: flex-start">
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
@@ -46,8 +64,13 @@ div.polaroid {
       <p id="notice">
         <%= notice %>
       </p>
-      <%= link_to 'New Whatever Chat', new_whatever_chat_path, {class: "btn btn-lg btn-primary btn-block text-white mb-3"} %>
+      
+      <!-- <%= link_to 'New Whatever Chat', new_whatever_chat_path, {class: "btn btn-lg btn-primary btn-block text-white mb-3"} %> -->
 
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-lg btn-primary btn-block mb-3" data-toggle="modal" data-target="#exampleModal">
+        New Whatever Chat
+      </button>
 
     <% @whatever_chats.each do |whatever_chat| %>
 
