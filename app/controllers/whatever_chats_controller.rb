@@ -56,7 +56,8 @@ class WhateverChatsController < ApplicationController
       end  
     end
     # page number starts from 1, not 0
-    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).order('created_at DESC')
+    #@whatever_chats = WhateverChat.eager_load(:comments, :votes).all()
+    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
     @whatever_chat = WhateverChat.new
     
   end
@@ -176,11 +177,14 @@ class WhateverChatsController < ApplicationController
     end
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
+    @whatever_chat = WhateverChat.new
+    render 'index'
   end
 
   def from
     username = params[:username]
     user = User.find_by(username: username)
+    @current_user = user
 
     if user.nil?
       @err_msg = 'Nice try, but no such user exists...'
@@ -189,6 +193,7 @@ class WhateverChatsController < ApplicationController
     end
 
     @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).order('created_at DESC')
+    @whatever_chat = WhateverChat.new
     render :template => 'whatever_chats/index'
   end
 
