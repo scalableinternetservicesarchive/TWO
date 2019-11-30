@@ -22,7 +22,7 @@ class WhateverChatsController < ApplicationController
       end
     else
       if !@current_user.tags.nil?
-        userTags =  @current_user.tags.split(",").reject(&:empty?).uniq.map(&:downcase)
+        userTags =  @current_user.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
       else
         userTags = [""]
       end
@@ -31,7 +31,7 @@ class WhateverChatsController < ApplicationController
       puts "matching ads..."
       relevantAds = []      
       ads.each do |ad|
-        adTags = ad.tags.split(",").reject(&:empty?).uniq.map(&:downcase)
+        adTags = ad.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
         userTags.each { |item|
           if adTags.include? item
             puts "found an ad match {ad id: " + ad.id.to_s + ", ad tags: " + ad.tags.downcase + ", matching user tag: " + item.downcase + "}"
