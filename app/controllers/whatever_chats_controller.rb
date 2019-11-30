@@ -58,6 +58,29 @@ class WhateverChatsController < ApplicationController
     # page number starts from 1, not 0
     #@whatever_chats = WhateverChat.eager_load(:comments, :votes).all()
     @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
+    @whatever_chats.each do |item|
+      if @current_user.nil?
+        item.status = "neutral"
+      end      
+      
+      item.votes.each do |vote|
+        if item.status.nil? && vote.username == @current_user.username
+          item.status = vote.att
+        end
+        if !vote.att.nil?
+          if vote.att == "up"
+            item.up_vote = (item.up_vote.nil? ? 1 :(item.up_vote+ 1))
+          else vote.att == "down"
+            item.down_vote = (item.down_vote.nil? ? 1 :(item.down_vote+ 1))
+          end
+        end
+      end  
+      
+      if item.status.nil?
+        item.status = "neutral"
+      end
+    end 
+    
     @whatever_chat = WhateverChat.new
     
   end
