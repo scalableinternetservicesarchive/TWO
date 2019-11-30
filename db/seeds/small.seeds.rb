@@ -1,6 +1,7 @@
 require 'pp'
 
 names = File.readlines(Rails.root.join('db','seeds','small.csv')).map{ |line| line.chop }
+tags = File.readlines(Rails.root.join('db','seeds','noun-tags.csv')).map{ |line| line.chop }
 
 names.each { |name| 
   if !User.where(username: name).present?
@@ -17,3 +18,14 @@ names.each { |name|
                                  up_vote: 0, 
                                  down_vote: 0, 
                                  original_id: 0) }
+
+100.times { |id|
+    tag = tags.sample
+    puts 'seeding image with tag: ' + tag + ', id: ' + id.to_s
+    Ad.create!(
+      name: 'random', 
+      data: File.read('storage/images/random' + id.to_s + '.jpg'), 
+      filename: "random.jpg", 
+      tags: tag, 
+      mime_type: "image/jpeg")
+}
