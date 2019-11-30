@@ -133,8 +133,8 @@ div.polaroid {
               { username: @current_user.nil? ? 'Global' : @current_user.username,
                 postid: whatever_chat.id,
                 status: whatever_chat.status,
-                up: whatever_chat.up_votes,
-                down: whatever_chat.down_votes,
+                up: whatever_chat.up_vote,
+                down: whatever_chat.down_vote,
               },
               {class: "mx-2"}
             ) %>
