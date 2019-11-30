@@ -16,7 +16,7 @@ class UserAvatar extends React.Component {
     }
 
     return (
-      <a href={`/from/${this.props.username}`}>
+      <a href={`/from/${this.props.username}`} class="text-white">
         <img src={ava}
              height={18} width={18} alt={"avatar"} />
              {this.props.username}
