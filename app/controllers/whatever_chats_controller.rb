@@ -14,6 +14,7 @@ class WhateverChatsController < ApplicationController
     @ad1_id = 1
     @ad2_id = 2
     if @current_user.nil?
+      puts "generating random ads ..."
       @ad1_id = 1 + Random.rand(adCount)
       @ad2_id = 1 + Random.rand(adCount)
       while @ad1_id == @ad2_id
@@ -21,20 +22,21 @@ class WhateverChatsController < ApplicationController
       end
     else
       if !@current_user.tags.nil?
-        userTags =  @current_user.tags.split(",")
+        userTags =  @current_user.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
       else
         userTags = [""]
       end
+      puts "user tags are :"
       puts userTags
-      puts "Ad tags are : "
+      puts "matching ads..."
       relevantAds = []      
       ads.each do |ad|
+        adTags = ad.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
         userTags.each { |item|
-          if ad.tags.downcase.include? item.downcase
-            puts "found an ad match"
-            if !relevantAds.include? ad.id          
-              relevantAds << ad.id
-            end
+          if adTags.include? item
+            puts "found an ad match {ad id: " + ad.id.to_s + ", ad tags: " + ad.tags.downcase + ", matching user tag: " + item.downcase + "}"
+            relevantAds << ad.id
+            break
           end
         }
       end
@@ -51,7 +53,9 @@ class WhateverChatsController < ApplicationController
           @ad2_id = 1 + Random.rand(adCount)
           while @ad1_id == @ad2_id
             @ad2_id = 1 + Random.rand(adCount)
-          end   
+          end 
+        else
+          @ad2_id = relevantAds.sample
         end
       end  
     end

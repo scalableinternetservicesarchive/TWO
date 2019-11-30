@@ -48,16 +48,18 @@ class Retwitte extends React.Component {
   render () {
     if(this.props.username === "Global") return (<></>);
     else return (
-      <div>
-        <button onClick={this.handleOpenModal}>Retwitte</button>
+      <div class="d-flex flex-even">
+        <button onClick={this.handleOpenModal} class="flex-even btn btn-info btn-sm mx-2">Retwitte</button>
         <ReactModal
           ariaHideApp={false}
           style={customStyles}
           isOpen={this.state.showModal}
         >
           Do you really want to retwitte this post?
-          <button onClick={this.yesCloseModal}>Yes</button>
-          <button onClick={this.noCloseModal}>No</button>
+          <div class="d-flex mt-3">
+            <button onClick={this.yesCloseModal} class="btn btn-primary btn-sm flex-fill mr-1">Yes</button>
+            <button onClick={this.noCloseModal} class="btn btn-secondary btn-sm flex-fill ml-1">No</button>
+          </div>
         </ReactModal>
       </div>
     );
