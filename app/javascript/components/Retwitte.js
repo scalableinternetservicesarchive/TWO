@@ -48,8 +48,8 @@ class Retwitte extends React.Component {
   render () {
     if(this.props.username === "Global") return (<></>);
     else return (
-      <div>
-        <button onClick={this.handleOpenModal}>Retwitte</button>
+      <div class="d-flex flex-even">
+        <button onClick={this.handleOpenModal} class="flex-even btn btn-info btn-sm mx-2">Retwitte</button>
         <ReactModal
           ariaHideApp={false}
           style={customStyles}

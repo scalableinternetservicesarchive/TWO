@@ -20,6 +20,12 @@
   display: block; 
 }
 
+// provides even spacing for "comments" and "retwitte" button
+// by setting the flex basis to 0
+.flex-even {
+  flex: 1;
+}
+
  html, body {
   height: 100%;
   }

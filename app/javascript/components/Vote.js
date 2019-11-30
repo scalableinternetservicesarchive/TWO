@@ -89,20 +89,15 @@ class Vote extends React.Component {
     }
 
     return (
-      <div>
-        <div
-          style={{background: this.state.upcolor}}
-          onClick={this.clickUp}>
-            <img src={require('../images/static/up.png')} alt={"upvote"}
-                 height={25} width={25} />
-            {this.state.up}
+      <div class="d-flex">
+        <div style={{background: this.state.upcolor}} onClick={this.clickUp} class="mr-3 mb-2">
+          <img src={require('../images/static/up.png')} alt={"upvote"} height={25} width={25} />
+          {this.state.up}
         </div>
-      <div
-        style={{background: this.state.downcolor}}
-        onClick={this.clickDown}>
-        <img src={require('../images/static/down.png')}
-                   alt={'downvote'} height={25} width={25} />
-          {this.state.down} </div>
+        <div style={{background: this.state.downcolor}} onClick={this.clickDown} class="mr-3 mb-2">
+          <img src={require('../images/static/down.png')} alt={'downvote'} height={25} width={25} />
+          {this.state.down} 
+        </div>
       </div>
     )
   }
