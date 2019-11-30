@@ -33,11 +33,10 @@ class WhateverChatsController < ApplicationController
       ads.each do |ad|
         adTags = ad.tags.split(",").reject(&:empty?).uniq.map(&:downcase)
         userTags.each { |item|
-          if adTags.include? item.downcase
+          if adTags.include? item
             puts "found an ad match {ad id: " + ad.id.to_s + ", ad tags: " + ad.tags.downcase + ", matching user tag: " + item.downcase + "}"
-            if !relevantAds.include? ad.id
-              relevantAds << ad.id
-            end
+            relevantAds << ad.id
+            break
           end
         }
       end
