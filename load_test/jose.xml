@@ -59,7 +59,7 @@
 
        <thinktime value="1" random="true"/>
 
-      <!-- Retwitte -->
+      <!-- Auth: Retwitte -->
       <!--
       <transaction name="retwitte">
           <for from="1" to="5" incr="1" var="counter">
@@ -78,7 +78,7 @@
                              &quot;username&quot;: &quot;%%_loginname%%&quot;}"
        -->
 
-        <!-- Comments -->
+        <!-- Auth: Comments -->
         <!--
         <transaction name="comments">
           <for from="1" to="5" incr="1" var="counter">
@@ -102,29 +102,40 @@
         </transaction>
         -->
 
+        <!-- Auth: Send Message -->
         <!--
         <transaction name="inbox_post">
-        <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="iter">
-          <var name="loginname"/>
-        </setdynvars>
-         <request subst="true">
-            <http url="/post" method="POST" version="1.1" content_type="application/json"
-               contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
-                          &quot;body&quot;: &quot;%%_body%%&quot;, 
-                          &quot;to_user_id&quot;: &quot;0&quot;, 
-                          &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
-                          &quot;alias&quot;: &quot;&quot;, 
-                          &quot;tags&quot;: &quot;&quot;, 
-                          &quot;original_id&quot;: &quot;0&quot; }" />
-         </request>
+        <for from="1" to="10" incr="1" var="counter">
+          <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="to_user_id"/>
+             </setdynvars>
+          <setdynvars sourcetype="random_string" length="20">
+              <var name="to_body"/>
+          </setdynvars>
+          <request subst="true">
+              <http url="/post" method="POST" version="1.1" content_type="application/json"
+                contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                            &quot;body&quot;: &quot;%%_to_body%%&quot;, 
+                            &quot;to_user_id&quot;: &quot;%%_to_user_id%%&quot;, 
+                            &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                            &quot;alias&quot;: &quot;&quot;, 
+                            &quot;tags&quot;: &quot;&quot;, 
+                            &quot;original_id&quot;: &quot;0&quot; }" />
+          </request>
+        </for>
        </transaction> 
-      -->
-     
-      <!-- Profile View -->
+       -->
+      <!-- Auth: Profile View -->
+      <!--
        <request subst="true">
          <http url="/from/%%_loginname%%" method="GET" version="1.1" />
        </request>
-       
+       -->
+
+      <!-- To me-->
+       <request subst="true">
+         <http url="/to_me" method="GET" version="1.1" />
+       </request>
 
 
     </session>
