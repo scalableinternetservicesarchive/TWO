@@ -59,6 +59,7 @@
 
        <thinktime value="1" random="true"/>
 
+      <!-- Retwitte -->
       <!--
       <transaction name="retwitte">
           <for from="1" to="5" incr="1" var="counter">
@@ -77,6 +78,8 @@
                              &quot;username&quot;: &quot;%%_loginname%%&quot;}"
        -->
 
+        <!-- Comments -->
+        <!--
         <transaction name="comments">
           <for from="1" to="5" incr="1" var="counter">
              <thinktime value="5" random="true"/>
@@ -96,7 +99,24 @@
                    />
              </request>
           </for>
-       </transaction>
+        </transaction>
+        -->
+        <transaction name="inbox_post">
+        <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="iter">
+          <var name="loginname"/>
+        </setdynvars>
+         <request subst="true">
+            <http url="/post" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                          &quot;body&quot;: &quot;%%_body%%&quot;, 
+                          &quot;to_user_id&quot;: &quot;0&quot;, 
+                          &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;alias&quot;: &quot;&quot;, 
+                          &quot;tags&quot;: &quot;&quot;, 
+                          &quot;original_id&quot;: &quot;0&quot; }" />
+         </request>
+       </transaction> -->
+
 
     </session>
 
