@@ -182,14 +182,14 @@ div.polaroid {
       <h5 class="card-header">We hate ads too, but we love our advertisers' money more.</h5>
       <div class="card-body">
         <div class="polaroid">
-          <img style="width: 100%" src="/ads/<%= @ad1_id%>/serve">
+          <%= image_tag(Ad.find(@ad1_id).image, style:'width:100%')%>
         </div>
       </div>
     </div>
     <div class="card">
     <div class="card-body">
     <div class="polaroid">
-    <img style="width: 100%" src="/ads/<%= @ad2_id%>/serve">
+    <%= image_tag(Ad.find(@ad2_id).image, style:'width:100%')%>
     </div>
     </div>
     </div>

@@ -6,10 +6,10 @@
   
   <div class="show-whateverchat">
 
-  <p id="notice"><%= notice %></p>
-  
-  <h6 class="mb-3 font-weight-normal text-secondary">Posted by: <%= @nameToDisplay %></h6>
-  <h3 class="h3 mb-3 font-weight-normal"><%= @whatever_chat.title %></h3>
+    <p id="notice"><%= notice %></p>
+    
+    <h6 class="mb-3 font-weight-normal text-secondary">Posted by: <%= @nameToDisplay %></h6>
+    <h3 class="h3 mb-3 font-weight-normal"><%= @whatever_chat.title %></h3>
 
     <p><%= @whatever_chat.body %></p>
     
@@ -18,24 +18,28 @@
     <hr/>
 
     <% unless @comments.nil? %>
+      <% unless @current_user.nil? %>
         <%= form_with(method: "post_comment") do |form| %>
           <%= form.text_area :commentBody, {class: "form-control mb-3", rows: "3", required: "", placeholder: "What are your thoughts?"} %>
           <div class="d-flex justify-content-end">
-          <%= form.submit "Post Comment", {class: "btn btn-primary"} %>
+            <%= form.submit "Post Comment", {class: "btn btn-primary"} %>
           </div>
         <% end %>
+      <%else%>
+        You must be logged in to post a comment.
+      <%end%>
 
-        <hr/>
-        
-        <h6 class="mb-3"> <%= @whatever_chat.comments.count %> Comments </h6>
-        <% @comments.each do |comment| %>
-          <div class="mb-2">
-            <span class="badge badge-info">
-              <%= User.find(comment.userid).username %>
-            </span> :
-            <%= comment.body %>
-          </div>
-        <% end %>
+      <hr/>
+      
+      <h6 class="mb-3"> <%= @whatever_chat.comments.count %> Comments </h6>
+      <% @comments.each do |comment| %>
+        <div class="mb-2">
+          <span class="badge badge-info">
+            <%= User.find(comment.userid).username %>
+          </span> :
+          <%= comment.body %>
+        </div>
+      <% end %>
     <% end %>
 
   </div>
