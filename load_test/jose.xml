@@ -32,6 +32,7 @@
   <options>
     <option name="file_server" id="usersFile" value="users.csv" />
     <option name="file_server" id="new_usersFile" value="new_users.csv" />
+    <option name="file_server" id="nounFile" value="../db/seeds/noun-tags.csv" />
     <option name="idle_timeout" value="60000"/>
     <option name="global_ack_timeout" value="60000"/>
   </options>
@@ -125,6 +126,44 @@
         </for>
        </transaction> 
        -->
+
+       <!-- Auth: Post with tags -->
+        
+        <transaction name="tag_post">
+        <for from="1" to="10" incr="1" var="counter">
+          <setdynvars sourcetype="random_string" length="20">
+              <var name="to_body"/>
+          </setdynvars>
+          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
+            <var name="tag1"/>
+          </setdynvars>
+
+          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
+            <var name="tag2"/>
+          </setdynvars>
+
+          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
+            <var name="tag3"/>
+          </setdynvars>
+
+          <request subst="true">
+              <http url="/post" method="POST" version="1.1" content_type="application/json"
+                contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                            &quot;body&quot;: &quot;%%_to_body%% #%%_tag1%% #%%_tag2%% #%%_tag3%%&quot;, 
+                            &quot;to_user_id&quot;: &quot;0&quot;, 
+                            &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                            &quot;alias&quot;: &quot;&quot;, 
+                            &quot;tags&quot;: &quot;&quot;, 
+                            &quot;original_id&quot;: &quot;0&quot; }" />
+          </request>
+        </for>
+       </transaction> 
+       
+
+
+
+
+
       <!-- Auth: Profile View -->
       <!--
        <request subst="true">
@@ -133,10 +172,11 @@
        -->
 
       <!-- To me-->
+      <!--
        <request subst="true">
          <http url="/to_me" method="GET" version="1.1" />
        </request>
-
+      -->
 
     </session>
 
