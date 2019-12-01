@@ -8,7 +8,7 @@
       <%= f.text_field :tags, {class: "form-control", placeholder: "tag 1, tag 2, ..."} %>
     </div>
     <div class="form-group">
-      <%= f.file_field :data, accept: 'image/*' %>
+      <%= f.file_field :data, {accept: 'image/*', required: ""} %>
     </div>
 
     <%= f.submit "Upload", {class: "btn btn-primary float-right"} %>
