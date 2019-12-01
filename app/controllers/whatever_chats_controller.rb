@@ -11,8 +11,8 @@ class WhateverChatsController < ApplicationController
     #TODO :Bring only the id and the tags column from db as you are again making an api call to get the image
     ads = Ad.all().select("id,tags")
     adCount = ads.length
-    @ad1_id = 1
-    @ad2_id = 2
+    @ad1_id = 9
+    @ad2_id = 10
     if @current_user.nil?
       puts "generating random ads ..."
       @ad1_id = 1 + Random.rand(adCount)
