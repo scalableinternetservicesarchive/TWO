@@ -39,6 +39,7 @@ class AdsController < ApplicationController
     end
 
     def serve
+        expires_in 1.hours, public: true
         @ad = Ad.find(params[:id])
         send_data(@ad.data, :type => @ad.mime_type, :filename => "#{@ad.name}.jpg", :disposition => "inline")
       end
