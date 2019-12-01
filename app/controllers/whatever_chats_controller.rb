@@ -21,47 +21,11 @@ class WhateverChatsController < ApplicationController
         @ad2_id = 1 + Random.rand(adCount)
       end
     else
-      if !@current_user.tags.nil?
-        userTags =  @current_user.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
-      else
-        userTags = [""]
-      end
-      puts "user tags are :"
-      puts userTags
-      puts "matching ads..."
-      relevantAds = []      
-      ads.each do |ad|
-        adTags = ad.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
-        userTags.each { |item|
-          if adTags.include? item
-            puts "found an ad match {ad id: " + ad.id.to_s + ", ad tags: " + ad.tags.downcase + ", matching user tag: " + item.downcase + "}"
-            relevantAds << ad.id
-            break
-          end
-        }
-      end
-      if relevantAds.length == 0
-        @ad1_id = 1 + Random.rand(adCount)
-        @ad2_id = 1 + Random.rand(adCount)
-        while @ad1_id == @ad2_id
-          @ad2_id = 1 + Random.rand(adCount)
-        end
-      else
-        @ad1_id = relevantAds.sample
-        relevantAds.delete(@ad1_id)
-        if relevantAds.length == 0
-          @ad2_id = 1 + Random.rand(adCount)
-          while @ad1_id == @ad2_id
-            @ad2_id = 1 + Random.rand(adCount)
-          end 
-        else
-          @ad2_id = relevantAds.sample
-        end
-      end  
+      get_ads(ads, adCount)
     end
     # page number starts from 1, not 0
     #@whatever_chats = WhateverChat.eager_load(:comments, :votes).all()
-    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
+    @whatever_chats = WhateverChat.where(to_user_id: 0).paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
     @whatever_chats.each do |item|
       if @current_user.nil?
         item.status = "neutral"
@@ -201,6 +165,10 @@ class WhateverChatsController < ApplicationController
       render :err, :layout => "application"
       return
     end
+    
+    ads = Ad.all().select("id,tags")
+    adCount = ads.length
+    get_ads(ads, adCount)
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
     @whatever_chat = WhateverChat.new
@@ -217,6 +185,11 @@ class WhateverChatsController < ApplicationController
       render :err, :layout => "application"
       return
     end
+
+    ads = Ad.all().select("id,tags")
+    adCount = ads.length
+    get_ads(ads, adCount)
+    puts "Got ads in from/:user"
 
     @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).order('created_at DESC')
     @whatever_chat = WhateverChat.new
@@ -288,5 +261,45 @@ class WhateverChatsController < ApplicationController
     def extract_tags(text_body)
       puts "extracting tags"
       return text_body.scan(/#(\w+)/)
+    end
+
+    def get_ads(ads, adCount)
+      if !@current_user.tags.nil?
+        userTags =  @current_user.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
+      else
+        userTags = [""]
+      end
+      puts "user tags are :"
+      puts userTags
+      puts "matching ads..."
+      relevantAds = []      
+      ads.each do |ad|
+        adTags = ad.tags.split(",").reject(&:blank?).map(&:strip).uniq.map(&:downcase)
+        userTags.each { |item|
+          if adTags.include? item
+            puts "found an ad match {ad id: " + ad.id.to_s + ", ad tags: " + ad.tags.downcase + ", matching user tag: " + item.downcase + "}"
+            relevantAds << ad.id
+            break
+          end
+        }
+      end
+      if relevantAds.length == 0
+        @ad1_id = 1 + Random.rand(adCount)
+        @ad2_id = 1 + Random.rand(adCount)
+        while @ad1_id == @ad2_id
+          @ad2_id = 1 + Random.rand(adCount)
+        end
+      else
+        @ad1_id = relevantAds.sample
+        relevantAds.delete(@ad1_id)
+        if relevantAds.length == 0
+          @ad2_id = 1 + Random.rand(adCount)
+          while @ad1_id == @ad2_id
+            @ad2_id = 1 + Random.rand(adCount)
+          end 
+        else
+          @ad2_id = relevantAds.sample
+        end
+      end  
     end
 end

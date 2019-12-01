@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :ads do
     get "serve", :on => :member
   end
+  #get '/ads//serve', to: '/ads/serve'
   get '/from/:username', to: 'whatever_chats#from'
   post '/vote', to: 'whatever_chats#vote'
   post '/retwitte', to: 'whatever_chats#retwitte'

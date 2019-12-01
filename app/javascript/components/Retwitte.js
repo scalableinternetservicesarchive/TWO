@@ -39,6 +39,9 @@ class Retwitte extends React.Component {
       username: this.props.username,
       original_id: this.props.postid
     });
+    setTimeout(function(){
+      location.reload();
+    }, 500);
   }
 
   noCloseModal () {
