@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="15000"/>
+  </clients>
+
+  <servers>
+    <!--
+    <server host="twdevs2.aie2pa9xpx.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+    -->
+    <server host="localhost" port="3000" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="1" unit="second">
+      <users arrivalrate="1" unit="second"/>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="file_server" id="usersFile" value="users.csv" />
+    <option name="file_server" id="new_usersFile" value="new_users.csv" />
+    <option name="idle_timeout" value="60000"/>
+    <option name="global_ack_timeout" value="60000"/>
+  </options>
+
+  <sessions>
+
+    <!-- Login and Fool Around -->
+    <session name="normal-login-and-everything" probability="100" type="ts_http">
+       <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
+          <var name="loginname"/>
+       </setdynvars>
+       <setdynvars sourcetype="random_string" length="20">
+          <var name="title"/>
+       </setdynvars>
+       <setdynvars sourcetype="random_string" length="100">
+          <var name="body"/>
+       </setdynvars>
+
+       <transaction name="login">
+<request><http url='http://localhost:3000/ads' version='1.1'  contents_from_file='/home/mdy/.tsung/tsung_recorder20191130-1759-1.bin' content_type='multipart/form-data; boundary=---------------------------321596845641865586253527265' method='POST'>
+  <http_header name='Accept' value='text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' />
+  <http_header name='Accept-Encoding' value='gzip, deflate' />
+  <http_header name='Accept-Language' value='en-US,en;q=0.5' /></http></request>
+       </transaction>
+
+
+
+
+
+
+
+    </session>
+
+
+  </sessions>
+</tsung>
