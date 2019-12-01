@@ -194,6 +194,7 @@ class WhateverChatsController < ApplicationController
     ads = Ad.all().select("id,tags")
     adCount = ads.length
     get_ads(ads, adCount)
+    puts "Got ads in from/:user"
 
     @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).order('created_at DESC')
     @whatever_chat = WhateverChat.new

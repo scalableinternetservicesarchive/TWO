@@ -101,6 +101,8 @@
           </for>
         </transaction>
         -->
+
+        <!--
         <transaction name="inbox_post">
         <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="iter">
           <var name="loginname"/>
@@ -115,7 +117,14 @@
                           &quot;tags&quot;: &quot;&quot;, 
                           &quot;original_id&quot;: &quot;0&quot; }" />
          </request>
-       </transaction> -->
+       </transaction> 
+      -->
+     
+      <!-- Profile View -->
+       <request subst="true">
+         <http url="/from/%%_loginname%%" method="GET" version="1.1" />
+       </request>
+       
 
 
     </session>
