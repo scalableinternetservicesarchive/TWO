@@ -65,7 +65,8 @@ class WhateverChatsController < ApplicationController
       @loggedIn = false
       @nameToDisplay = @whatever_chat.from_user_id
     end
-    @comments = @whatever_chat.comments 
+    @comments = @whatever_chat.comments
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   # GET /whatever_chats/new

@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
         puts "Comments create\n"
         params.permit!
         @current_user ||= User.find_by(id: session[:user_id])
-        puts current_user
+        puts @current_user
         @post = WhateverChat.find(params[:id])
         @post.comments.create :userid => @current_user.id, :body => params[:commentBody]
         redirect_to("/whatever_chats/"+params[:id])
