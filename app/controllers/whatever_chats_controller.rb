@@ -9,7 +9,7 @@ class WhateverChatsController < ApplicationController
     @current_user ||= User.find_by(id: session[:user_id])
 
     #TODO :Bring only the id and the tags column from db as you are again making an api call to get the image
-    ads = Ad.all()
+    ads = Ad.all().select("id,tags")
     adCount = ads.length
     @ad1_id = 1
     @ad2_id = 2
@@ -48,7 +48,6 @@ class WhateverChatsController < ApplicationController
         item.status = "neutral"
       end
     end 
-    
     @whatever_chat = WhateverChat.new
     
   end
