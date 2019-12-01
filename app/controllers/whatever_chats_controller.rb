@@ -25,7 +25,7 @@ class WhateverChatsController < ApplicationController
     end
     # page number starts from 1, not 0
     #@whatever_chats = WhateverChat.eager_load(:comments, :votes).all()
-    @whatever_chats = WhateverChat.paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
+    @whatever_chats = WhateverChat.where(to_user_id: 0).paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
     @whatever_chats.each do |item|
       if @current_user.nil?
         item.status = "neutral"
@@ -169,11 +169,6 @@ class WhateverChatsController < ApplicationController
     ads = Ad.all().select("id,tags")
     adCount = ads.length
     get_ads(ads, adCount)
-
-
-
-
-
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
     @whatever_chat = WhateverChat.new
