@@ -46,7 +46,14 @@
   <http_header name='Accept-Language' value='en-US,en;q=0.5' /></http></request>
        </transaction>
 
-
+       <transaction name="post_ad">
+       <request><http url='http://localhost:3000/ads' version='1.1'  contents_from_file='ad.bin' content_type='multipart/form-data; boundary=---------------------------147790864417284478122069420995' method='POST'>
+        <http_header name='Accept' value='text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' />
+        <http_header name='Accept-Encoding' value='gzip, deflate' />
+        <http_header name='Accept-Language' value='en-US,en;q=0.5' />
+        </http>
+        </request>
+       </transaction> 
 
 
 
