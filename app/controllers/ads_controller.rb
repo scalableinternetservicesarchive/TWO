@@ -1,6 +1,7 @@
 # app/controllers/photos_controller.rb
 
 class AdsController < ApplicationController
+  skip_forgery_protection
     def index
       @ads = Ad.all
     end
