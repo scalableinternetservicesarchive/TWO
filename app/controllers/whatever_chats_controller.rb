@@ -166,7 +166,7 @@ class WhateverChatsController < ApplicationController
       return
     end
     
-    ads = Ad.all()
+    ads = Ad.all().select("id,tags")
     adCount = ads.length
     get_ads(ads, adCount)
 
@@ -191,7 +191,7 @@ class WhateverChatsController < ApplicationController
       return
     end
 
-    ads = Ad.all()
+    ads = Ad.all().select("id,tags")
     adCount = ads.length
     get_ads(ads, adCount)
 
