@@ -169,6 +169,7 @@ class WhateverChatsController < ApplicationController
     
     ads = Ad.all().select("id,tags")
     adCount = ads.length
+
     get_ads(ads, adCount)
 
     @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
@@ -177,9 +178,11 @@ class WhateverChatsController < ApplicationController
   end
 
   def from
+    user_id = session[:user_id]
+    @current_user = User.find_by(id: user_id)
+
     username = params[:username]
     user = User.find_by(username: username)
-    @current_user = user
 
     if user.nil?
       @err_msg = 'Nice try, but no such user exists...'
@@ -189,7 +192,21 @@ class WhateverChatsController < ApplicationController
 
     ads = Ad.all().select("id,tags")
     adCount = ads.length
-    get_ads(ads, adCount)
+
+    puts '-------------------------'
+    PP.pp @current_user.to_s
+    puts '-------------------------'
+    if @current_user.nil?
+      puts "generating random ads ..."
+      @ad1_id = 1 + Random.rand(adCount)
+      @ad2_id = 1 + Random.rand(adCount)
+      while @ad1_id == @ad2_id
+        @ad2_id = 1 + Random.rand(adCount)
+      end
+    else
+      get_ads(ads, adCount)
+    end
+
     puts "Got ads in from/:user"
 
     @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).order('created_at DESC')
