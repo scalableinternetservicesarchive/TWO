@@ -1,0 +1,41 @@
+    <session name="registration" probability="" type="ts_http">
+       <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
+          <var name="username"/>
+       </setdynvars>
+
+       <transaction name="registration">
+
+         <request>
+            <http url="/users/new" method="GET" version="1.1" />
+         </request>
+
+         <thinktime value="5" random="true"/>
+
+         <request subst="true">
+            <!-- Using json here -->
+            <http url="/users" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_username%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot;, 
+                          &quot;password_confirmation&quot;: &quot;password&quot; }" />
+         </request>
+       </transaction>
+
+       <thinktime value="5" random="true"/>
+
+       <transaction name="index_page">
+         <request subst="true">
+            <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+            <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+            <http url="/whatever" method="GET" version="1.1" />
+         </request>
+
+         <request subst="true">
+            <http url='%%_ads1%%' version='1.1' method='GET'></http>
+         </request>
+
+         <request subst="true">
+            <http url='%%_ads2%%' version='1.1' method='GET'></http>
+         </request>
+       </transaction>
+
+    </session>
