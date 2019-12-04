@@ -6,33 +6,32 @@
   </clients>
 
   <servers>
-    <server host="localhost" port="3000" type="tcp"/>
+    <server host="http://twodevs3.aie2pa9xpx.us-west-2.elasticbeanstalk.com/" port="80" type="tcp"/>
   </servers>
 
   <load>
-    <arrivalphase phase="1" duration="5" unit="second" wait_all_sessions_end="true">
-      <users arrivalrate="5" unit="second"/>
+    <arrivalphase phase="1" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="16" unit="second"/>
     </arrivalphase>
-    <!--
+    
     <arrivalphase phase="2" duration="60" unit="second" wait_all_sessions_end="true">
-      <users arrivalrate="10" unit="second"/>
+      <users arrivalrate="32" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="3" duration="60" unit="second" wait_all_sessions_end="true">
-      <users arrivalrate="15" unit="second"/>
+      <users arrivalrate="64" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="4" duration="60" unit="second" wait_all_sessions_end="true">
-      <users arrivalrate="20" unit="second"/>
+      <users arrivalrate="128" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="5" duration="60" unit="second" wait_all_sessions_end="true">
-      <users arrivalrate="25" unit="second"/>
+      <users arrivalrate="256" unit="second"/>
     </arrivalphase>
-    -->
-  </load>
+    </load>
 
   <options>
     <option name="file_server" id="usersFile" value="users.csv" />
     <option name="file_server" id="new_usersFile" value="new_users.csv" />
-    <option name="file_server" id="nounFile" value="../db/seeds/noun-tags.csv" />
+    <option name="file_server" id="nounFile" value="noun-tags.csv" />
     <option name="idle_timeout" value="60000"/>
     <option name="global_ack_timeout" value="60000"/>
   </options>
