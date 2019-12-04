@@ -79,12 +79,16 @@
          </request>
        </transaction>
 
-       <!-- Get Ads -->
+       <!-- Index, get ads -->
       <transaction name="get_ads">
+            <request>
+                <http url="/whatever" method="GET" version="1.1" />
+            </request>
+      
              <request subst="true">
                 <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
                 <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
-                <http url='http://localhost:3000/whatever' version='1.1' method='GET'></http>
+                <http url='http://twodevs3.aie2pa9xpx.us-west-2.elasticbeanstalk.com/whatever' version='1.1' method='GET'></http>
              </request>
              
              <request subst="true">
