@@ -80,7 +80,7 @@ div.polaroid {
   <div class="left-half flex-grow-1">
 
 
-    <% cache_if @current_user.nil?, @whatever_chats do %>
+    <% cache_if @current_user.nil?, @whatever_chats, expires_in: 1.minutes do %>
 
 
     <div class="flex-column chat-list" style="align-items: flex-start; width: 50%; margin: 0 auto;">
@@ -189,7 +189,7 @@ div.polaroid {
     <div class="card">
     <div class="card-body">
     <div class="polaroid">
-    <%= image_tag(Ad.find(@ad2_id).image, style:'width:100%')%>
+    <%= image_tag(Ad.find(@ad2_id).image, style:'width:99%')%>
     </div>
     </div>
     </div>
