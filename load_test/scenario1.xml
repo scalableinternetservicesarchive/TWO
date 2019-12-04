@@ -6,14 +6,13 @@
   </clients>
 
   <servers>
-    <server host="http://twodevs3.aie2pa9xpx.us-west-2.elasticbeanstalk.com/" port="80" type="tcp"/>
+    <server host="twodevs3.aie2pa9xpx.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
 
   <load>
     <arrivalphase phase="1" duration="60" unit="second" wait_all_sessions_end="true">
       <users arrivalrate="16" unit="second"/>
     </arrivalphase>
-    
     <arrivalphase phase="2" duration="60" unit="second" wait_all_sessions_end="true">
       <users arrivalrate="32" unit="second"/>
     </arrivalphase>
@@ -37,159 +36,70 @@
   </options>
 
   <sessions>
-
-    <!-- Login and Fool Around -->
-    <session name="normal-login-and-everything" probability="100" type="ts_http">
-       <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
-          <var name="loginname"/>
+    <!-- Registration Session 100%-->
+    <session name="reg_session" probability="100" type="ts_http">
+       <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
+          <var name="username"/>
        </setdynvars>
-       <setdynvars sourcetype="random_string" length="20">
-          <var name="title"/>
-       </setdynvars>
-       
-       
 
-       <transaction name="login">
+       <!-- Welcome Page -->
+       <transaction name="welcome">
+         <request>
+            <http url="/" method="GET" version="1.1" />
+         </request>
+        </transaction>
+
+        <thinktime value="5" random="true"/>
+
+        <!-- Register New User-->
+       <transaction name="registration">
+         <request>
+            <http url="/users/new" method="GET" version="1.1" />
+         </request>
+
+         <thinktime value="5" random="true"/>
+
+         <request subst="true">
+            
+            <http url="/users" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_username%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot;, 
+                          &quot;password_confirmation&quot;: &quot;password&quot; }" />
+         </request>
+        </transaction>
+
+        <thinktime value="5" random="true"/>
+
+        <!-- Login New User -->
+        <transaction name="login">
          <request subst="true">
             <http url="/login" method="POST" version="1.1" content_type="application/json"
-               contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+               contents="{&quot;username&quot;: &quot;%%_username%%&quot;, 
                           &quot;password&quot;: &quot;password&quot; }" />
          </request>
        </transaction>
 
-       <thinktime value="1" random="true"/>
-
-      <!-- Auth: Retwitte -->
-      <!--
-      <transaction name="retwitte">
-          <for from="1" to="5" incr="1" var="counter">
-             <thinktime value="5" random="true"/>
-             <setdynvars sourcetype="random_number" start="1" end="100">
-               <var name="original_id"/>
-             </setdynvars>
-             <request subst="true"> 
-               <http url="/retwitte" method="POST" version="1.1" content_type="application/json"
-                  contents="{&quot;original_id&quot;: &quot;%%_original_id%%&quot;, 
-                             &quot;username&quot;: &quot;%%_loginname%%&quot;}" />
-             </request>
-          </for>
-       </transaction>
-       contents="{&quot;commentBody&quot;: &quot;%%_comment_body%%&quot;, 
-                             &quot;username&quot;: &quot;%%_loginname%%&quot;}"
-       -->
-
-        <!-- Auth: Comments -->
-        <!--
-        <transaction name="comments">
-          <for from="1" to="5" incr="1" var="counter">
-             <thinktime value="5" random="true"/>
-              <setdynvars sourcetype="random_string" length="3">
-                <var name="comment_body"/>
-              </setdynvars>
-
-              <setdynvars sourcetype="random_string" length="5">
-                <var name="comment_body2"/>
-              </setdynvars>
-              <setdynvars sourcetype="random_number" start="1" end="100">
-               <var name="post_id"/>
-             </setdynvars>
-             <request subst="true"> 
-               <http url="/whatever_chats/%%post_id" method="POST" version="1.1" content_type="application/x-www-form-urlencoded; charset=UTF-8"
-                   contents="_method=post_comment&amp;commentBody=%%_comment_body%%+%%_comment_body2%%"
-                   />
-             </request>
-          </for>
-        </transaction>
-        -->
-
-        <!-- Auth: Send Message -->
-        <!--
-        <transaction name="inbox_post">
-        <for from="1" to="10" incr="1" var="counter">
-          <setdynvars sourcetype="random_number" start="1" end="100">
-               <var name="to_user_id"/>
-             </setdynvars>
-          <setdynvars sourcetype="random_string" length="20">
-              <var name="to_body"/>
-          </setdynvars>
-          <request subst="true">
-              <http url="/post" method="POST" version="1.1" content_type="application/json"
-                contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
-                            &quot;body&quot;: &quot;%%_to_body%%&quot;, 
-                            &quot;to_user_id&quot;: &quot;%%_to_user_id%%&quot;, 
-                            &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
-                            &quot;alias&quot;: &quot;&quot;, 
-                            &quot;tags&quot;: &quot;&quot;, 
-                            &quot;original_id&quot;: &quot;0&quot; }" />
-          </request>
-        </for>
-       </transaction> 
-       -->
-
-       <!-- Auth: Post with tags -->
-        <!--
-        <transaction name="tag_post">
-        <for from="1" to="10" incr="1" var="counter">
-          <setdynvars sourcetype="random_string" length="20">
-              <var name="to_body"/>
-          </setdynvars>
-          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
-            <var name="tag1"/>
-          </setdynvars>
-
-          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
-            <var name="tag2"/>
-          </setdynvars>
-
-          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
-            <var name="tag3"/>
-          </setdynvars>
-
-          <request subst="true">
-              <http url="/post" method="POST" version="1.1" content_type="application/json"
-                contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
-                            &quot;body&quot;: &quot;%%_to_body%% #%%_tag1%% #%%_tag2%% #%%_tag3%%&quot;, 
-                            &quot;to_user_id&quot;: &quot;0&quot;, 
-                            &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
-                            &quot;alias&quot;: &quot;&quot;, 
-                            &quot;tags&quot;: &quot;&quot;, 
-                            &quot;original_id&quot;: &quot;0&quot; }" />
-          </request>
-        </for>
-       </transaction> 
-       -->
-
-      <!-- Auth: Profile View -->
-      <!--
-       <request subst="true">
-         <http url="/from/%%_loginname%%" method="GET" version="1.1" />
-       </request>
-       -->
-
-      <!-- To me-->
-      <!--
-       <request subst="true">
-         <http url="/to_me" method="GET" version="1.1" />
-       </request>
-      -->
-
-      <!-- Post Ad-
-        If not here, it was moved to simple.xml because it refuses to be commented out -->
-
-
-      <!-- Get Ad -->
-      <transaction name="login">
+       <!-- Get Ads -->
+      <transaction name="get_ads">
              <request subst="true">
-                <dyn_variable name="res" re="right-(.*f)" />
-                <http url='/whatever' version='1.1' method='GET'></http>
+                <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+                <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+                <http url='http://localhost:3000/whatever' version='1.1' method='GET'></http>
              </request>
              
              <request subst="true">
-                <http url='/%%_res%%' version='1.1' method='GET'></http>
+                <http url='%%_ads1%%' version='1.1' method='GET'></http>
+             </request>
+
+             <request subst="true">
+                <http url='%%_ads2%%' version='1.1' method='GET'></http>
              </request>
        </transaction>
 
+
+
     </session>
+    
 
 
   </sessions>
