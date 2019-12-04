@@ -20,8 +20,6 @@
          </request>
        </transaction>
 
-       <thinktime value="5" random="true"/>
-
        <transaction name="index_page">
          <request subst="true">
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />

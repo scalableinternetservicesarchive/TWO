@@ -18,7 +18,7 @@ gen_sess() {
    echo "    "\<\/session\> >> sessions/$sessname.xml
 }
 
-SESS=("registration" 5 "index_page")
+SESS=("registration" "index_page")
 gen_sess registration "${SESS[@]}"
 
 SESS=("index_page" 5 "view_chat")
