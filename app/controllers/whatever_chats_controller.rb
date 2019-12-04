@@ -209,7 +209,7 @@ class WhateverChatsController < ApplicationController
 
     puts "Got ads in from/:user"
 
-    @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10)..preload(:comments, :votes).order('created_at DESC')
+    @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('created_at DESC')
     @whatever_chat = WhateverChat.new
     render :template => 'whatever_chats/index'
   end
