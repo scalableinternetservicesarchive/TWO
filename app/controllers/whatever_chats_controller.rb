@@ -9,10 +9,10 @@ class WhateverChatsController < ApplicationController
     @current_user ||= User.find_by(id: session[:user_id])
 
     #TODO :Bring only the id and the tags column from db as you are again making an api call to get the image
-    ads = Ad.all().select("id,tags")
+    ads = Ad.all()
     adCount = ads.length
-    @ad1_id = 9
-    @ad2_id = 10
+    @ad1_id = 1
+    @ad2_id = 2
     if @current_user.nil?
       puts "generating random ads ..."
       @ad1_id = 1 + Random.rand(adCount)
@@ -25,7 +25,7 @@ class WhateverChatsController < ApplicationController
     end
     # page number starts from 1, not 0
     #@whatever_chats = WhateverChat.eager_load(:comments, :votes).all()
-    @whatever_chats = WhateverChat.where(to_user_id: 0).paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('whatever_chats.created_at DESC')
+    @whatever_chats = WhateverChat.where(to_user_id: 0).paginate(page: params[:page], per_page:10).order('whatever_chats.created_at DESC')
     @whatever_chats.each do |item|
       if @current_user.nil?
         item.status = "neutral"
@@ -167,12 +167,12 @@ class WhateverChatsController < ApplicationController
       return
     end
     
-    ads = Ad.all().select("id,tags")
+    ads = Ad.all()
     adCount = ads.length
 
     get_ads(ads, adCount)
 
-    @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('created_at DESC')
+    @whatever_chats = WhateverChat.where(to_user_id: user_id).paginate(page: params[:page], per_page:10).order('created_at DESC')
     @whatever_chat = WhateverChat.new
     render 'index'
   end
@@ -190,7 +190,7 @@ class WhateverChatsController < ApplicationController
       return
     end
 
-    ads = Ad.all().select("id,tags")
+    ads = Ad.all()
     adCount = ads.length
 
     puts '-------------------------'
@@ -209,7 +209,7 @@ class WhateverChatsController < ApplicationController
 
     puts "Got ads in from/:user"
 
-    @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).preload(:comments, :votes).order('created_at DESC')
+    @whatever_chats = WhateverChat.where(from_user_id: username).paginate(page: params[:page], per_page:10).order('created_at DESC')
     @whatever_chat = WhateverChat.new
     render :template => 'whatever_chats/index'
   end

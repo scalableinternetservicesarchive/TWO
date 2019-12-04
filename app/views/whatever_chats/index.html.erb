@@ -145,16 +145,22 @@ div.polaroid {
             <%= react_component("Vote",
               { username: @current_user.nil? ? 'Global' : @current_user.username,
                 postid: whatever_chat.id,
-                status: whatever_chat.status,
-                up: whatever_chat.up_vote,
-                down: whatever_chat.down_vote,
+                status: @current_user.nil? ? 'neutral':
+                                              case x=whatever_chat.votes.find_by(username: @current_user.username)
+                                              when nil
+                                                'neutral'
+                                              else
+                                                x.att
+                                              end,
+                                  up: whatever_chat.votes.where(att: 'up').count,
+                                  down: whatever_chat.votes.where(att: 'down').count,
               },
               {class: "mx-2"}
             ) %>
             <div class="d-flex">
               <div class="d-flex flex-even">
                 <a href="/whatever_chats/<%= whatever_chat.id%>" class="btn btn-info btn-sm d-inline-block flex-even mx-2">
-                  view comments <span class="badge badge-light"><%= whatever_chat.comments.size %></span>
+                  view comments <span class="badge badge-light"><%= whatever_chat.comments.count %></span>
                 </a>
               </div>
               <%= react_component("Retwitte",
