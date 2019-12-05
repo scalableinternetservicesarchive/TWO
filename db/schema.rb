@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_01_190253) do
+ActiveRecord::Schema.define(version: 2019_12_05_050616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 2019_12_01_190253) do
     t.string "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["whatever_chat_id"], name: "index_comments_on_whatever_chat_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,8 +69,6 @@ ActiveRecord::Schema.define(version: 2019_12_01_190253) do
     t.string "att"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["att"], name: "index_votes_on_att"
-    t.index ["whatever_chat_id"], name: "index_votes_on_whatever_chat_id"
   end
 
   create_table "whatever_chats", force: :cascade do |t|
@@ -86,9 +83,6 @@ ActiveRecord::Schema.define(version: 2019_12_01_190253) do
     t.integer "up_vote", default: 0
     t.integer "down_vote", default: 0
     t.integer "original_id", default: 0
-    t.index ["from_user_id"], name: "index_whatever_chats_on_from_user_id"
-    t.index ["original_id"], name: "index_whatever_chats_on_original_id"
-    t.index ["to_user_id"], name: "index_whatever_chats_on_to_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
