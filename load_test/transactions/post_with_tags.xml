@@ -1,0 +1,34 @@
+       <!-- Auth: Post with tags -->
+        <transaction name="post_with_tags">
+        <for from="1" to="10" incr="1" var="counter">
+          <setdynvars sourcetype="random_string" length="20">
+              <var name="to_body"/>
+          </setdynvars>
+          <setdynvars sourcetype="random_string" length="20">
+             <var name="title"/>
+          </setdynvars>
+          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
+            <var name="tag1"/>
+          </setdynvars>
+
+          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
+            <var name="tag2"/>
+          </setdynvars>
+
+          <setdynvars sourcetype="file" fileid="nounFile" delimiter="," order="random">
+            <var name="tag3"/>
+          </setdynvars>
+
+          <request subst="true">
+              <http url="/post" method="POST" version="1.1" content_type="application/json"
+                contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                            &quot;body&quot;: &quot;%%_to_body%% #%%_tag1%% #%%_tag2%% #%%_tag3%%&quot;, 
+                            &quot;to_user_id&quot;: &quot;0&quot;, 
+                            &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                            &quot;alias&quot;: &quot;&quot;, 
+                            &quot;tags&quot;: &quot;&quot;, 
+                            &quot;original_id&quot;: &quot;0&quot; }" />
+          </request>
+        </for>
+       </transaction> 
+
