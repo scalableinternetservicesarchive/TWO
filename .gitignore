@@ -43,3 +43,6 @@ yarn-debug.log*
 # just ignore everything to keep ec2.cs291.com consistent
 /.elasticbeanstalk
 load_test/.mdy*
+
+#ignore scenarios since we are dynamically generating target names
+load_test/scenarios/*.xml

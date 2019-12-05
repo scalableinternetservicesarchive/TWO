@@ -1,5 +1,11 @@
 #!/bin/bash
 
+env_name="twodevs3"
+
+if [ -n "$1" ]; then
+    env_name="$1"
+fi
+
 gen_sess() {
    local sessname="$1"
    shift
@@ -18,19 +24,19 @@ gen_sess() {
    echo "    "\<\/session\> >> sessions/$sessname.xml
 }
 
-SESS=("registration" "index_page")
+SESS=("welcome" "registration" "index_page")
 gen_sess registration "${SESS[@]}"
 
-SESS=("index_page" 5 "view_chat")
+SESS=("welcome" "index_page" 5 "view_chat_pages" 5 "new_post")
 gen_sess unauth "${SESS[@]}"
 
-SESS=("login" "index_page" 5 "view_chat" 5 "upvote" 5 "downvote")
+SESS=("welcome" "login" "index_page" 5 "view_chat_pages" 5 "upvote" 5 "downvote")
 gen_sess auth_passive "${SESS[@]}"
 
-SESS=("login" "index_page" 5 "retwitte" 5 "index_page" 5 "view_chat" 5 "upvote" 5 "profile" "to_me" "post_with_tags" 5 "new_post" "downvote" 5 "comment" "inbox_post")
+SESS=("welcome" "login" "index_page" 5 "retwitte" 5 "index_page" 5 "view_chat_pages" 5 "upvote" 5 "profile" "to_me" "post_with_tags" 5 "new_post" "downvote" 5 "comment" "inbox_post")
 gen_sess auth_active "${SESS[@]}"
 
-SESS=("login" "index_page" 5 "post_ad")
+SESS=("welcome" "login" "index_page" 5 "post_ad")
 gen_sess ad_owner "${SESS[@]}"
 
 
@@ -38,7 +44,7 @@ gen_scenario() {
    local name="$1"
    shift
    local arr=("$@")
-   cat sessions/head.xml > scenarios/$name.xml
+   env_name="$env_name" envsubst < sessions/head.xml > scenarios/$name.xml
    echo "  "\<\sessions\> >> scenarios/$name.xml
    for ele in ${arr[@]}; do
       if ! [ "$ele" -eq "$ele" ] 2> /dev/null
