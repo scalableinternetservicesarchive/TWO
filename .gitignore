@@ -45,4 +45,4 @@ yarn-debug.log*
 load_test/.mdy*
 
 #ignore scenarios since we are dynamically generating target names
-load_test/scenarios/*
+load_test/scenarios/*.xml
