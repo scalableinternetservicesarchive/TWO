@@ -14,12 +14,12 @@ if !User.where(:id => 0).present?
 end
 
 if !Ad.where(:id => 1).present?
-    ad1 = Ad.create!(name: 'Initial Ad 1', filename: "ad1.jpeg", tags: "test1", mime_type: "image/jpeg")
-    ad1.image.attach(io: File.open('storage/ads/ad1.jpeg'), filename: 'file.pdf')
+    ad1 = File.read('storage/ads/ad1.jpeg')
+    Ad.create!(name: 'Initial Ad 1', data: ad1, filename: "ad1.jpeg", tags: "test1", mime_type: "image/jpeg")
 end
 
 if !Ad.where(:id => 2).present?
-    ad2 = Ad.create!(name: 'Initial Ad 2', filename: "ad2.jpeg", tags: "test2", mime_type: "image/jpeg")
-    ad2.image.attach(io: File.open('storage/ads/ad2.jpeg'), filename: 'file.pdf')
+    ad2 = File.read('storage/ads/ad2.jpeg')
+    Ad.create!(name: 'Initial Ad 2', data: ad2, filename: "ad2.jpeg", tags: "test2", mime_type: "image/jpeg")
 end
 
