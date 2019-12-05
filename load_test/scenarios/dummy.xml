@@ -1,4 +1,161 @@
-    <session name="auth_active" probability="" type="ts_http">
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="15000"/>
+  </clients>
+
+  <servers>
+    <server host="localhost" port="3000" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="16" unit="second"/>
+    </arrivalphase>
+    
+    <arrivalphase phase="2" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="32" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="64" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="128" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="60" unit="second" wait_all_sessions_end="true">
+      <users arrivalrate="256" unit="second"/>
+    </arrivalphase>
+    </load>
+
+  <options>
+    <option name="file_server" id="usersFile" value="users.csv" />
+    <option name="file_server" id="new_usersFile" value="new_users.csv" />
+    <option name="file_server" id="nounFile" value="noun-tags.csv" />
+    <option name="idle_timeout" value="60000"/>
+    <option name="global_ack_timeout" value="60000"/>
+  </options>
+
+  <sessions>
+    <session name="auth_passive" probability="50" type="ts_http">
+        <transaction name="welcome">
+            <request>
+            <http url="/" method="GET" version="1.1" />
+            </request>
+        </transaction>
+
+               <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
+          <var name="loginname"/>
+       </setdynvars>
+
+       <transaction name="login">
+
+         <request>
+            <http url="/login" method="GET" />
+         </request>
+
+         <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
+            <http url="/login" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot; }" />
+         </request>
+       </transaction>
+
+       <transaction name="index_page">
+         <request subst="true">
+            <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+            <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+            <http url="/whatever" method="GET" version="1.1" />
+         </request>
+
+         <request subst="true">
+            <http url='%%_ads1%%' version='1.1' method='GET'></http>
+         </request>
+
+         <request subst="true">
+            <http url='%%_ads2%%' version='1.1' method='GET'></http>
+         </request>
+       </transaction>
+
+       <thinktime value="5" random="true"/>
+
+        <!-- View Random Posts on Random Pages -->
+        <transaction name="view_posts">
+            <for from="1" to="3" incr="1" var="page_counter">
+                <!-- View Random Post-->
+                <for from="1" to="5" incr="1" var="post_counter">
+                    <thinktime value="5" random="true"/>
+                    <setdynvars sourcetype="random_number" start="1" end="100">
+                        <var name="rndpostid"/>
+                    </setdynvars>
+                    <request subst="true">  
+                        <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
+                    </request>
+                </for>
+
+                <!-- Move to random page, load ads-->
+                <setdynvars sourcetype="random_number" start="1" end="10">
+                    <var name="rndpageid"/>
+                </setdynvars>
+                <request subst="true">  
+                    <http url="/whatever_chats?page=%%_rndpageid%%" method="GET" />
+                </request>
+
+                <request subst="true">
+                    <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+                    <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+                    <http url='/whatever' version='1.1' method='GET'></http>
+                </request>
+                
+                <request subst="true">
+                    <http url='%%_ads1%%' version='1.1' method='GET'></http>
+                </request>
+
+                <request subst="true">
+                    <http url='%%_ads2%%' version='1.1' method='GET'></http>
+                </request>
+            </for>
+         </transaction>
+
+       <thinktime value="5" random="true"/>
+
+
+       <transaction name="upvote">
+          <for from="1" to="5" incr="1" var="counter">
+             <thinktime value="5" random="true"/>
+             <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="rndpostid"/>
+             </setdynvars>
+             <request subst="true"> 
+               <http url="/vote" method="POST" version="1.1" content_type="application/json"
+                  contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                             &quot;whatever_chat_id&quot;: &quot;%%_rndpostid%%&quot;, 
+                             &quot;operation&quot;: &quot;up&quot; }" />
+             </request>
+          </for>
+       </transaction>
+
+       <thinktime value="5" random="true"/>
+
+
+       <transaction name="downvote">
+          <for from="1" to="5" incr="1" var="counter">
+             <thinktime value="5" random="true"/>
+             <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="rndpostid"/>
+             </setdynvars>
+             <request subst="true"> 
+               <http url="/vote" method="POST" version="1.1" content_type="application/json"
+                  contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                             &quot;whatever_chat_id&quot;: &quot;%%_rndpostid%%&quot;, 
+                             &quot;operation&quot;: &quot;down&quot; }" />
+             </request>
+          </for>
+       </transaction>
+
+    </session>
+    <session name="auth_active" probability="50" type="ts_http">
         <transaction name="welcome">
             <request>
             <http url="/" method="GET" version="1.1" />
@@ -151,7 +308,7 @@
           </request>
        </transaction>
 
-      <!-- Auth: Private Messages -->
+      <!-- Auth: Profile View -->
       <transaction name="priviate_messages">
           <request subst="true">
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
@@ -300,3 +457,5 @@
        </transaction> 
 
     </session>
+  </sessions>
+</tsung>

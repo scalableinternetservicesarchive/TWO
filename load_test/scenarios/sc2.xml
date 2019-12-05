@@ -38,7 +38,13 @@
 
   <sessions>
     <session name="unauth" probability="100" type="ts_http">
-       <transaction name="index_page">
+        <transaction name="welcome">
+            <request>
+            <http url="/" method="GET" version="1.1" />
+            </request>
+        </transaction>
+
+               <transaction name="index_page">
          <request subst="true">
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
@@ -56,17 +62,73 @@
 
        <thinktime value="5" random="true"/>
 
+        <!-- View Random Posts on Random Pages -->
+        <transaction name="view_posts">
+            <for from="1" to="3" incr="1" var="page_counter">
+                <!-- View Random Post-->
+                <for from="1" to="5" incr="1" var="post_counter">
+                    <thinktime value="5" random="true"/>
+                    <setdynvars sourcetype="random_number" start="1" end="100">
+                        <var name="rndpostid"/>
+                    </setdynvars>
+                    <request subst="true">  
+                        <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
+                    </request>
+                </for>
 
-       <transaction name="view_chat">
-          <for from="1" to="5" incr="1" var="counter">
-             <thinktime value="5" random="true"/>
-             <setdynvars sourcetype="random_number" start="1" end="100">
-               <var name="rndpostid"/>
-             </setdynvars>
-             <request subst="true">  
-                <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
-             </request>
-          </for>
+                <!-- Move to random page, load ads-->
+                <setdynvars sourcetype="random_number" start="1" end="10">
+                    <var name="rndpageid"/>
+                </setdynvars>
+                <request subst="true">  
+                    <http url="/whatever_chats?page=%%_rndpageid%%" method="GET" />
+                </request>
+
+                <request subst="true">
+                    <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+                    <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+                    <http url='/whatever' version='1.1' method='GET'></http>
+                </request>
+                
+                <request subst="true">
+                    <http url='%%_ads1%%' version='1.1' method='GET'></http>
+                </request>
+
+                <request subst="true">
+                    <http url='%%_ads2%%' version='1.1' method='GET'></http>
+                </request>
+            </for>
+         </transaction>
+
+       <thinktime value="5" random="true"/>
+
+
+       <!-- Depends on Login -->
+       <setdynvars sourcetype="random_string" length="20">
+          <var name="title"/>
+       </setdynvars>
+       <setdynvars sourcetype="random_string" length="100">
+          <var name="body"/>
+       </setdynvars>
+       <thinktime value="1" random="true"/>
+
+       <request>
+         <http url="/whatever_chats/new" method="GET" version="1.1" />
+       </request>
+
+       <thinktime value="10" random="true"/>
+
+       <transaction name="newpost">
+         <request subst="true">
+            <http url="/post" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                          &quot;body&quot;: &quot;%%_body%%&quot;, 
+                          &quot;to_user_id&quot;: &quot;0&quot;, 
+                          &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;alias&quot;: &quot;&quot;, 
+                          &quot;tags&quot;: &quot;&quot;, 
+                          &quot;original_id&quot;: &quot;0&quot; }" />
+         </request>
        </transaction>
 
     </session>
