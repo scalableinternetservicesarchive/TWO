@@ -1,5 +1,11 @@
     <session name="ad_owner" probability="" type="ts_http">
-       <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
+        <transaction name="welcome">
+            <request>
+            <http url="/" method="GET" version="1.1" />
+            </request>
+        </transaction>
+
+               <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
           <var name="loginname"/>
        </setdynvars>
 

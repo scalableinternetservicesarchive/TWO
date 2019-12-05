@@ -1,5 +1,11 @@
     <session name="auth_passive" probability="" type="ts_http">
-       <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
+        <transaction name="welcome">
+            <request>
+            <http url="/" method="GET" version="1.1" />
+            </request>
+        </transaction>
+
+               <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
           <var name="loginname"/>
        </setdynvars>
 
@@ -35,18 +41,43 @@
 
        <thinktime value="5" random="true"/>
 
+        <!-- View Random Posts on Random Pages -->
+        <transaction name="view_posts">
+            <for from="1" to="3" incr="1" var="page_counter">
+                <!-- View Random Post-->
+                <for from="1" to="5" incr="1" var="post_counter">
+                    <thinktime value="5" random="true"/>
+                    <setdynvars sourcetype="random_number" start="1" end="100">
+                        <var name="rndpostid"/>
+                    </setdynvars>
+                    <request subst="true">  
+                        <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
+                    </request>
+                </for>
 
-       <transaction name="view_chat">
-          <for from="1" to="5" incr="1" var="counter">
-             <thinktime value="5" random="true"/>
-             <setdynvars sourcetype="random_number" start="1" end="100">
-               <var name="rndpostid"/>
-             </setdynvars>
-             <request subst="true">  
-                <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
-             </request>
-          </for>
-       </transaction>
+                <!-- Move to random page, load ads-->
+                <setdynvars sourcetype="random_number" start="1" end="10">
+                    <var name="rndpageid"/>
+                </setdynvars>
+                <request subst="true">  
+                    <http url="/whatever_chats?page=%%_rndpageid%%" method="GET" />
+                </request>
+
+                <request subst="true">
+                    <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+                    <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+                    <http url='/whatever' version='1.1' method='GET'></http>
+                </request>
+                
+                <request subst="true">
+                    <http url='%%_ads1%%' version='1.1' method='GET'></http>
+                </request>
+
+                <request subst="true">
+                    <http url='%%_ads2%%' version='1.1' method='GET'></http>
+                </request>
+            </for>
+         </transaction>
 
        <thinktime value="5" random="true"/>
 
