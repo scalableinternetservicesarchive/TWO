@@ -73,6 +73,7 @@
 
        <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
@@ -115,6 +116,7 @@
 
        <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
@@ -150,6 +152,7 @@
 
                <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
@@ -189,6 +192,7 @@
                 </request>
 
                 <request subst="true">
+                    <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
                     <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
                     <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
                     <http url='/whatever' version='1.1' method='GET'></http>
@@ -263,6 +267,7 @@
 
        <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
@@ -302,6 +307,7 @@
                 </request>
 
                 <request subst="true">
+                    <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
                     <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
                     <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
                     <http url='/whatever' version='1.1' method='GET'></http>
@@ -381,6 +387,7 @@
 
        <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
@@ -416,6 +423,7 @@
 
        <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
@@ -455,6 +463,7 @@
                 </request>
 
                 <request subst="true">
+                    <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
                     <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
                     <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
                     <http url='/whatever' version='1.1' method='GET'></http>
@@ -493,6 +502,7 @@
       <!-- Auth: Profile View -->
       <transaction name="profile">
           <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/from/%%_loginname%%" method="GET" version="1.1" />
@@ -510,6 +520,7 @@
       <!-- Auth: Profile View -->
       <transaction name="priviate_messages">
           <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/to_me" method="GET" version="1.1" />
