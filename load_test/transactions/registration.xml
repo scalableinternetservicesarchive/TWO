@@ -1,6 +1,12 @@
+       <!-->
        <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
           <var name="username"/>
        </setdynvars>
+       <-->
+       <setdynvars sourcetype="random_string" length="15">
+          <var name="username"/>
+       </setdynvars>
+
 
        <transaction name="registration">
 

@@ -151,7 +151,7 @@
           </request>
        </transaction>
 
-      <!-- Auth: Private Messages -->
+      <!-- Auth: Profile View -->
       <transaction name="priviate_messages">
           <request subst="true">
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
