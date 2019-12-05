@@ -1,5 +1,11 @@
 #!/bin/bash
 
+env_name="twodevs3"
+
+if [ -n "$1" ]; then
+    env_name="$1"
+fi
+
 gen_sess() {
    local sessname="$1"
    shift
@@ -38,7 +44,7 @@ gen_scenario() {
    local name="$1"
    shift
    local arr=("$@")
-   cat sessions/head.xml > scenarios/$name.xml
+   env_name="$env_name" envsubst < sessions/head.xml > scenarios/$name.xml
    echo "  "\<\sessions\> >> scenarios/$name.xml
    for ele in ${arr[@]}; do
       if ! [ "$ele" -eq "$ele" ] 2> /dev/null
