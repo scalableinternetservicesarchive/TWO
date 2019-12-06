@@ -1,8 +1,0 @@
-[06/Dec/2019:01:35:03 -0000] access to /robots.txt failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc5-quad/20191206-0131/robots.txt: File not found"
-[06/Dec/2019:01:35:04 -0000] access to /favicon.ico failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc5-quad/20191206-0131/favicon.ico: File not found"
-[06/Dec/2019:01:35:04 -0000] access to /assets/ico/favicon.ico failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc5-quad/20191206-0131/assets/ico/favicon.ico: File not found"
-[06/Dec/2019:01:38:02 -0000] access to /favicon.ico failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc5-quad/20191206-0131/favicon.ico: File not found"
