@@ -3,7 +3,6 @@
             <for from="1" to="3" incr="1" var="page_counter">
                 <!-- View Random Post-->
                 <for from="1" to="5" incr="1" var="post_counter">
-                    <thinktime value="5" random="true"/>
                     <setdynvars sourcetype="random_number" start="1" end="100">
                         <var name="rndpostid"/>
                     </setdynvars>

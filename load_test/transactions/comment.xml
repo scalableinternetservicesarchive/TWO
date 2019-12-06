@@ -1,7 +1,6 @@
         <!-- Auth: Comments -->
         <transaction name="comment">
           <for from="1" to="5" incr="1" var="counter">
-             <thinktime value="5" random="true"/>
               <setdynvars sourcetype="random_string" length="3">
                 <var name="comment_body"/>
               </setdynvars>
