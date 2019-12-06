@@ -1,5 +1,5 @@
 class RemoveIndexes < ActiveRecord::Migration[6.0]
-  def change
+  def up
     remove_index :whatever_chats, column: :to_user_id
     remove_index :whatever_chats, column: :from_user_id
     remove_index :whatever_chats, column: :original_id
