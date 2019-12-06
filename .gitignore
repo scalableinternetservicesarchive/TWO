@@ -46,3 +46,7 @@ load_test/.mdy*
 
 #ignore scenarios since we are dynamically generating target names
 load_test/scenarios/*.xml
+load_test/scenarios/**/*.xml
+
+#lets just keep data on jumpbox to make it easier to manage
+test_results/*

@@ -1,8 +1,0 @@
-[06/Dec/2019:06:42:08 -0000] access to /robots.txt failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc1-pagination-with-replica/20191206-0640/robots.txt: File not found"
-[06/Dec/2019:06:42:08 -0000] access to /favicon.ico failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc1-pagination-with-replica/20191206-0640/favicon.ico: File not found"
-[06/Dec/2019:06:42:09 -0000] access to /assets/ico/favicon.ico failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc1-pagination-with-replica/20191206-0640/assets/ico/favicon.ico: File not found"
-[06/Dec/2019:06:42:11 -0000] access to /favicon.ico failed for 169.231.162.166, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc1-pagination-with-replica/20191206-0640/favicon.ico: File not found"

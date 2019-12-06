@@ -1,8 +1,0 @@
-[06/Dec/2019:03:42:28 -0000] access to /favicon.ico failed for 128.111.43.64, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc3-fragcache-standard/20191206-0341/favicon.ico: File not found"
-[06/Dec/2019:03:42:29 -0000] access to /assets/ico/favicon.ico failed for 128.111.43.64, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc3-fragcache-standard/20191206-0341/assets/ico/favicon.ico: File not found"
-[06/Dec/2019:03:49:13 -0000] access to /favicon.ico failed for 128.111.43.64, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc3-fragcache-standard/20191206-0341/favicon.ico: File not found"
-[06/Dec/2019:03:49:13 -0000] access to /assets/ico/favicon.ico failed for 128.111.43.64, reason: 
-"httpd_file: Can't access /home/ec2-user/.tsung/sc3-fragcache-standard/20191206-0341/assets/ico/favicon.ico: File not found"
