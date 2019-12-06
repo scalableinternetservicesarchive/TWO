@@ -27,7 +27,7 @@ gen_sess() {
 SESS=("welcome" "registration" "index_page")
 gen_sess registration "${SESS[@]}"
 
-SESS=("welcome" "index_page" 5 "view_chat_pages" 5 "new_post")
+SESS=("welcome" "index_page" 5 "view_chat_pages")
 gen_sess unauth "${SESS[@]}"
 
 SESS=("welcome" "login" "index_page" 5 "view_chat_pages" 5 "upvote" 5 "downvote")
