@@ -1,0 +1,4 @@
+[06/Dec/2019:03:29:55 -0000] access to /favicon.ico failed for 128.111.43.64, reason: 
+"httpd_file: Can't access /home/ec2-user/.tsung/sc2-fragcache-standard/20191206-0322/favicon.ico: File not found"
+[06/Dec/2019:03:29:56 -0000] access to /assets/ico/favicon.ico failed for 128.111.43.64, reason: 
+"httpd_file: Can't access /home/ec2-user/.tsung/sc2-fragcache-standard/20191206-0322/assets/ico/favicon.ico: File not found"
