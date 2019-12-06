@@ -6,7 +6,7 @@
   </clients>
 
   <servers>
-    <server host="twodevs3.aie2pa9xpx.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+    <server host="${env_name}.aie2pa9xpx.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
 
   <load>

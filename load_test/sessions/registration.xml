@@ -1,7 +1,19 @@
     <session name="registration" probability="" type="ts_http">
+        <transaction name="welcome">
+            <request>
+            <http url="/" method="GET" version="1.1" />
+            </request>
+        </transaction>
+
+               <!-->
        <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
           <var name="username"/>
        </setdynvars>
+       <-->
+       <setdynvars sourcetype="random_string" length="15">
+          <var name="username"/>
+       </setdynvars>
+
 
        <transaction name="registration">
 
@@ -22,6 +34,7 @@
 
        <transaction name="index_page">
          <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
             <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
             <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
             <http url="/whatever" method="GET" version="1.1" />
