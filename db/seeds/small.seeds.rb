@@ -50,12 +50,12 @@ WhateverChat.insert_all(posts)
 100.times { |id|
     tag = tags.sample
     puts 'seeding image with tag: ' + tag + ', id: ' + id.to_s
-    ad = Ad.create!(
+    Ad.create!(
       name: 'random', 
+      data: File.read('storage/images/random' + id.to_s + '.jpg'),
       filename: "random.jpg", 
       tags: tag, 
       mime_type: "image/jpeg")
-    ad.image.attach(io: File.open('storage/images/random' + id.to_s + '.jpg'), filename: 'file.pdf')
 }
 
 # 10*post_num.times {
