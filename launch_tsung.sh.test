@@ -37,7 +37,7 @@ echo "tsung log name: ${log_name}"
 
 username=$(whoami)
 
-tag_specification='[{"ResourceType": "instance", "Tags": [{"Key": "Name", "Value": "tsung-'${username}'"}]}, {"ResourceType": "volume", "Tags": [{"Key": "Name", "Value": "tsung-'${username}'"}]}]'
+tag_specification='[{"ResourceType": "instance", "Tags": [{"Key": "Name", "Value": "tsung-'${username}'-'${target_env}'"}]}, {"ResourceType": "volume", "Tags": [{"Key": "Name", "Value": "tsung-'${username}'"}]}]'
 
 instance_id=$(aws ec2 run-instances \
   --image-id ami-f62afe8e \
