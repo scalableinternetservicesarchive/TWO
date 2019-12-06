@@ -1,0 +1,26 @@
+        <!-- Auth: Send Message -->
+        <transaction name="inbox_post">
+        <for from="1" to="10" incr="1" var="counter">
+          <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="to_user_id"/>
+             </setdynvars>
+          <setdynvars sourcetype="random_string" length="20">
+              <var name="to_body"/>
+          </setdynvars>
+          <setdynvars sourcetype="random_string" length="100">
+             <var name="title"/>
+          </setdynvars>
+
+          <request subst="true">
+              <http url="/post" method="POST" version="1.1" content_type="application/json"
+                contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                            &quot;body&quot;: &quot;%%_to_body%%&quot;, 
+                            &quot;to_user_id&quot;: &quot;%%_to_user_id%%&quot;, 
+                            &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                            &quot;alias&quot;: &quot;&quot;, 
+                            &quot;tags&quot;: &quot;&quot;, 
+                            &quot;original_id&quot;: &quot;0&quot; }" />
+          </request>
+        </for>
+       </transaction> 
+
