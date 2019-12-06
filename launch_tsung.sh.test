@@ -85,7 +85,7 @@ scp -o StrictHostKeyChecking=no -r -i  ~/TWO.pem load_test/ ec2-user@${public_ip
 
 echo "starting tsung..."
 echo "http://${public_ip}:8091"
-ssh -i ~/${username}.pem -o StrictHostKeyChecking=no ec2-user@${public_ip} "cd load_test; tsung -f scenarios/${scenario}.xml -l ~/.tsung/${log_name} start"
+ssh -i ~/${username}.pem -o StrictHostKeyChecking=no ec2-user@${public_ip} "cd load_test; tsung -f scenarios/${target_env}/${scenario}.xml -l ~/.tsung/${log_name} start"
 echo "tsung complete"
 echo "copying test result to test_results/${log_name}"
 scp -o StrictHostKeyChecking=no -r -i ~/TWO.pem ec2-user@${public_ip}:~/.tsung/${log_name} test_results/${log_name}

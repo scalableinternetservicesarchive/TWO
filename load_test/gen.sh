@@ -1,10 +1,12 @@
 #!/bin/bash
 
-env_name="twodevs3"
+usage() { echo "Usage: $0 <target>" 1>&2; exit 1; }
 
-if [ -n "$1" ]; then
-    env_name="$1"
+if [ -z "$1" ]; then
+   usage
 fi
+
+target="${1}"
 
 gen_sess() {
    local sessname="$1"
@@ -44,19 +46,21 @@ gen_scenario() {
    local name="$1"
    shift
    local arr=("$@")
-   env_name="$env_name" envsubst < sessions/head.xml > scenarios/$name.xml
-   echo "  "\<\sessions\> >> scenarios/$name.xml
+   env_name="$env_name" envsubst < sessions/head.xml > scenarios/${target}/$name.xml
+   echo "  "\<\sessions\> >> scenarios/${target}/$name.xml
    for ele in ${arr[@]}; do
       if ! [ "$ele" -eq "$ele" ] 2> /dev/null
       then
          local session_file=$ele
       else
-         sed 's/probability=""/probability="'$ele'"/g' sessions/$session_file.xml >> scenarios/$name.xml
+         sed 's/probability=""/probability="'$ele'"/g' sessions/$session_file.xml >> scenarios/${target}/$name.xml
       fi
    done
-   echo "  "\<\/sessions\> >> scenarios/$name.xml
-   echo \<\/tsung\> >> scenarios/$name.xml
+   echo "  "\<\/sessions\> >> scenarios/${target}/$name.xml
+   echo \<\/tsung\> >> scenarios/${target}/$name.xml
 }
+
+mkdir -p scenarios/${target}
 
 SC=("registration" 100)
 gen_scenario sc1 "${SC[@]}"
