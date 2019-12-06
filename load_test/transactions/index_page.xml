@@ -1,0 +1,17 @@
+       <transaction name="index_page">
+         <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
+            <dyn_variable name="ads1" re="100%&#34; src=&#34;(.*)&#34;" />
+            <dyn_variable name="ads2" re="99%&#34; src=&#34;(.*)&#34;" />
+            <http url="/whatever" method="GET" version="1.1" />
+         </request>
+
+         <request subst="true">
+            <http url='%%_ads1%%' version='1.1' method='GET'></http>
+         </request>
+
+         <request subst="true">
+            <http url='%%_ads2%%' version='1.1' method='GET'></http>
+         </request>
+       </transaction>
+

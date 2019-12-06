@@ -1,0 +1,27 @@
+       <!-->
+       <setdynvars sourcetype="file" fileid="new_usersFile" delimiter="," order="random">
+          <var name="username"/>
+       </setdynvars>
+       <-->
+       <setdynvars sourcetype="random_string" length="15">
+          <var name="username"/>
+       </setdynvars>
+
+
+       <transaction name="registration">
+
+         <request>
+            <http url="/users/new" method="GET" version="1.1" />
+         </request>
+
+         <thinktime value="5" random="true"/>
+
+         <request subst="true">
+            <!-- Using json here -->
+            <http url="/users" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_username%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot;, 
+                          &quot;password_confirmation&quot;: &quot;password&quot; }" />
+         </request>
+       </transaction>
+

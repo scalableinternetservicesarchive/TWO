@@ -1,0 +1,18 @@
+       <setdynvars sourcetype="file" fileid="usersFile" delimiter="," order="random">
+          <var name="loginname"/>
+       </setdynvars>
+
+       <transaction name="login">
+
+         <request>
+            <http url="/login" method="GET" />
+         </request>
+
+         <request subst="true">
+            <match do="abort" when="nomatch">HTTP/1.1 (2|3)\d\d</match>
+            <http url="/login" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;username&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;password&quot;: &quot;password&quot; }" />
+         </request>
+       </transaction>
+

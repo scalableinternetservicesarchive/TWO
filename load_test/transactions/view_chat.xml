@@ -1,0 +1,13 @@
+
+       <transaction name="view_chat">
+          <for from="1" to="5" incr="1" var="counter">
+             <thinktime value="5" random="true"/>
+             <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="rndpostid"/>
+             </setdynvars>
+             <request subst="true">  
+                <http url="/whatever_chats/%%_rndpostid%%" method="GET" />
+             </request>
+          </for>
+       </transaction>
+
