@@ -1,0 +1,26 @@
+
+       <!-- Depends on Login -->
+       <setdynvars sourcetype="random_string" length="20">
+          <var name="title"/>
+       </setdynvars>
+       <setdynvars sourcetype="random_string" length="100">
+          <var name="body"/>
+       </setdynvars>
+
+       <request>
+         <http url="/whatever_chats/new" method="GET" version="1.1" />
+       </request>
+
+       <transaction name="newpost">
+         <request subst="true">
+            <http url="/post" method="POST" version="1.1" content_type="application/json"
+               contents="{&quot;title&quot;: &quot;%%_title%%&quot;, 
+                          &quot;body&quot;: &quot;%%_body%%&quot;, 
+                          &quot;to_user_id&quot;: &quot;0&quot;, 
+                          &quot;from_user_id&quot;: &quot;%%_loginname%%&quot;, 
+                          &quot;alias&quot;: &quot;&quot;, 
+                          &quot;tags&quot;: &quot;&quot;, 
+                          &quot;original_id&quot;: &quot;0&quot; }" />
+         </request>
+       </transaction>
+

@@ -1,0 +1,21 @@
+        <!-- Auth: Comments -->
+        <transaction name="comment">
+          <for from="1" to="5" incr="1" var="counter">
+              <setdynvars sourcetype="random_string" length="3">
+                <var name="comment_body"/>
+              </setdynvars>
+
+              <setdynvars sourcetype="random_string" length="5">
+                <var name="comment_body2"/>
+              </setdynvars>
+              <setdynvars sourcetype="random_number" start="1" end="100">
+               <var name="post_id"/>
+             </setdynvars>
+             <request subst="true"> 
+               <http url="/whatever_chats/%%post_id" method="POST" version="1.1" content_type="application/x-www-form-urlencoded; charset=UTF-8"
+                   contents="_method=post_comment&amp;commentBody=%%_comment_body%%+%%_comment_body2%%"
+                   />
+             </request>
+          </for>
+        </transaction>
+

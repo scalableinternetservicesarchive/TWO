@@ -80,7 +80,7 @@ div.polaroid {
   <div class="left-half flex-grow-1">
 
 
-    <% cache_if @current_user.nil?, @whatever_chats, expires_in: 1.minutes do %>
+    <% cache_if @current_user.nil?, expires_in: 1.minutes do %>
 
 
     <div class="flex-column chat-list" style="align-items: flex-start; width: 50%; margin: 0 auto;">

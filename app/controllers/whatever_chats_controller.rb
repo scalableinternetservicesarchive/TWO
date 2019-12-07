@@ -193,9 +193,6 @@ class WhateverChatsController < ApplicationController
     ads = Ad.all()
     adCount = ads.length
 
-    puts '-------------------------'
-    PP.pp @current_user.to_s
-    puts '-------------------------'
     if @current_user.nil?
       puts "generating random ads ..."
       @ad1_id = 1 + Random.rand(adCount)

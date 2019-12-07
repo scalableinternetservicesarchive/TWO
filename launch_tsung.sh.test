@@ -1,0 +1,94 @@
+#!/bin/bash -e
+
+instance_type=t3.micro
+
+usage() { echo "Usage: $0 -s <scenario> -t <target env> -l <tsung log name> [-n <eb instance type>]" 1>&2; exit 1; }
+
+while getopts ":s:n:t:l:" o; do
+    case "${o}" in
+        s)
+            scenario=${OPTARG}
+            ;;
+        n)
+            instance_type=${OPTARG}
+            ;;
+        t)
+            target_env=${OPTARG}
+            ;;
+        l)
+            log_name=${OPTARG}
+            ;;
+        *)
+            echo "unrecognized option: ${OPTARG}"
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -z "${scenario}" ] || [ -z "${target_env}" ] || [ -z "${log_name}" ]; then
+    usage
+fi
+
+echo "scenario: ${scenario}"
+echo "tsung instance type: ${instance_type}"
+echo "tsung target: ${target_env}"
+echo "tsung log name: ${log_name}"
+
+username=$(whoami)
+
+tag_specification='[{"ResourceType": "instance", "Tags": [{"Key": "Name", "Value": "tsung-'${username}'"}]}, {"ResourceType": "volume", "Tags": [{"Key": "Name", "Value": "tsung-'${username}'"}]}]'
+
+instance_id=$(aws ec2 run-instances \
+  --image-id ami-f62afe8e \
+  --instance-type "${instance_type}" \
+  --key-name ${username} \
+  --security-group-ids sg-0ebf2c62af41a0eb1 \
+  --tag-specifications "${tag_specification}" | jq -r .Instances[0].InstanceId)
+
+if [ -z "$instance_id" ]; then
+   exit 1
+fi
+
+echo "InstanceId: ${instance_id}"
+
+sleep 2
+
+public_ip=$(aws ec2 describe-instances --instance-ids "${instance_id}" | jq -r .Reservations[0].Instances[0].PublicIpAddress)
+
+if [ -z "$public_ip" ]; then
+    echo "Public IP not yet available."
+    echo "Manually run: aws ec2 describe-instances --instance-ids ${instance_id} | jq -r .Reservations[0].Instances[0].PublicIpAddress"
+   exit 1
+fi
+
+echo "ip: ${public_ip}"
+echo "ssh -i ~/${username}.pem ec2-user@${public_ip}"
+echo "sleep for 60 sec..."
+sleep 10
+echo "sleep for 50 sec..."
+sleep 10
+echo "sleep for 40 sec..."
+sleep 10
+echo "sleep for 30 sec..."
+sleep 10
+echo "sleep for 20 sec..."
+sleep 10
+echo "sleep for 10 sec..."
+sleep 10
+
+echo "changing target to ${target_env}"
+cd load_test/; ./gen.sh ${target_env}; cd ..
+
+echo "moving file with scp"
+scp -o StrictHostKeyChecking=no -r -i  ~/TWO.pem load_test/ ec2-user@${public_ip}:~
+
+echo "starting tsung..."
+echo "http://${public_ip}:8091"
+ssh -i ~/${username}.pem -o StrictHostKeyChecking=no ec2-user@${public_ip} "cd load_test; tsung -f scenarios/${scenario}.xml -l ~/.tsung/${log_name} start"
+echo "tsung complete"
+echo "copying test result to test_results/${log_name}"
+scp -o StrictHostKeyChecking=no -r -i ~/TWO.pem ec2-user@${public_ip}:~/.tsung/${log_name} test_results/${log_name}
+
+echo "script complete"
+
