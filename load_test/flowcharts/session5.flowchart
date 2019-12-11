@@ -1,0 +1,13 @@
+st=>start: start
+e=>end
+op0=>operation: welcome
+op1=>operation: login
+op2=>operation: index_page
+op3=>operation: think 5s
+op4=>operation: post_ad
+st(right)->op0
+op0(right)->op1
+op1(right)->op2
+op2(right)->op3
+op3(right)->op4
+op4(right)->e
