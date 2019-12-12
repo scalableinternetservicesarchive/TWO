@@ -1,0 +1,45 @@
+st=>start: start
+e=>end
+op0=>operation: welcome
+op1=>operation: login
+op2=>operation: index_page
+op3=>operation: think 5s
+op4=>operation: retwitte
+op5=>operation: think 5s
+op6=>operation: index_page
+op7=>operation: think 5s
+op8=>operation: view_chat_pages
+op9=>operation: think 5s
+op10=>operation: upvote
+op11=>operation: think 5s
+op12=>operation: profile
+op13=>operation: to_me
+op14=>operation: post_with_tags
+op15=>operation: think 5s
+op16=>operation: new_post
+op17=>operation: downvote
+op18=>operation: think 5s
+op19=>operation: comment
+op20=>operation: inbox_post
+st(right)->op0
+op0(right)->op1
+op1(right)->op2
+op2(right)->op3
+op3(right)->op4
+op4(right)->op5
+op5(right)->op6
+op6(right)->op7
+op7(right)->op8
+op8(right)->op9
+op9(right)->op10
+op10(right)->op11
+op11(right)->op12
+op12(right)->op13
+op13(right)->op14
+op14(right)->op15
+op15(right)->op16
+op16(right)->op17
+op17(right)->op18
+op18(right)->op19
+op19(right)->op20
+op20(right)->e
